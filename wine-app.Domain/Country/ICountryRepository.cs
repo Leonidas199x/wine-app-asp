@@ -8,5 +8,7 @@ namespace wine_app.Domain.Country
         Task<IEnumerable<Country>> GetAll();
 
         Task<Country> Get(int Id);
+
+        Task<bool> Create(Country country);
     }
 }

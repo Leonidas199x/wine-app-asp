@@ -1,17 +1,14 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace wine_app.Models.Country
 {
-    public class Country
+    public class EditableCountryViewModel
     {
         public int Id { get; set; }
 
+        [Display(Name="Country"), Required]
         public string Name { get; set; }
 
         public string Note { get; set; }
-
-        public DateTime DateCreated { get; set; }
-
-        public DateTime DateUpdated { get; set; }
     }
 }

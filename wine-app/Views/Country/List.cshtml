@@ -1,4 +1,4 @@
-﻿@model wine_app.Models.Country.CountriesViewModel
+﻿@model IEnumerable<wine_app.Models.Country.Country>
 @{
     ViewData["Title"] = "Countries";
 }
@@ -14,7 +14,13 @@
         <thead>
             <tr id="header">
                 <th>
-                    Country
+                    Name
+                </th>
+                <th>
+                    Note
+                </th>
+                <th>
+                    Created
                 </th>
                 <th>
                     Actions
@@ -22,14 +28,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var country in Model.Countries)
+            @foreach (var country in Model.OrderBy(x => x.Name))
             {
                 <tr>
                     <td>
                         @country.Name
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Customer", new { id = country.Id }, new { @class = "btn btn-secondary" })
+                        @country.Note
+                    </td>
+                    <td>
+                        @country.DateCreated
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Country", new { id = country.Id }, new { @class = "btn btn-secondary" })
                     </td>
                 </tr>
             }

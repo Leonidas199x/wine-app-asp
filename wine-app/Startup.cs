@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using wine_app.Domain.Country;
+using wine_app.Mappers;
 
 namespace wine_app
 {
@@ -23,6 +24,9 @@ namespace wine_app
             services.AddControllersWithViews();
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<ICountryRepository, CountryRepository>();
+
+            //Register automapper
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddHttpClient(Domain.ApiNames.WineApi, c =>
             {
