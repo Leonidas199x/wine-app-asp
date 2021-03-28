@@ -16,5 +16,10 @@ namespace wine_app.Domain.Country
         {
             return await _countryRepository.GetAll().ConfigureAwait(false);
         }
+
+        public async Task<Country> Get(int Id)
+        {
+            return await _countryRepository.Get(Id).ConfigureAwait(false);
+        }
     }
 }

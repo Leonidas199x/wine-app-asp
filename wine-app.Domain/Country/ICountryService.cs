@@ -6,5 +6,7 @@ namespace wine_app.Domain.Country
     public interface ICountryService
     {
         Task<IEnumerable<Country>> GetAll();
+
+        Task<Country> Get(int Id);
     }
 }
