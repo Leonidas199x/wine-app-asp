@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using wine_app.Domain.Country;
 
 namespace wine_app
@@ -22,6 +23,11 @@ namespace wine_app
             services.AddControllersWithViews();
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<ICountryRepository, CountryRepository>();
+
+            services.AddHttpClient(Domain.ApiNames.WineApi, c =>
+            {
+                c.BaseAddress = new Uri(Configuration.GetSection("WineApiBaseAddress").Value);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
