@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wine-app", "wine-app.csproj", "{7484A4D4-41F6-4073-AF38-479D70665DE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wine-app.Domain", "..\wine-app.Domain\wine-app.Domain.csproj", "{714D972B-5E42-4D82-A5F8-CB661603EECF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7484A4D4-41F6-4073-AF38-479D70665DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7484A4D4-41F6-4073-AF38-479D70665DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7484A4D4-41F6-4073-AF38-479D70665DE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{714D972B-5E42-4D82-A5F8-CB661603EECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{714D972B-5E42-4D82-A5F8-CB661603EECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{714D972B-5E42-4D82-A5F8-CB661603EECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{714D972B-5E42-4D82-A5F8-CB661603EECF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
