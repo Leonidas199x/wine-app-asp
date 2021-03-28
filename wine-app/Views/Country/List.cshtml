@@ -1,0 +1,38 @@
+﻿@model wine_app.Models.Country.CountriesViewModel
+@{
+    ViewData["Title"] = "Countries";
+}
+
+<h1>Countries</h1>
+<div>
+    @Html.ActionLink("Add New Country", "Add", "Country", null, new { @class = "btn btn-secondary" })
+</div>
+<hr />
+<div class="row"></div>
+<div>
+    <table class="table" id="countriesTable">
+        <thead>
+            <tr id="header">
+                <th>
+                    Country
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var country in Model.Countries)
+            {
+                <tr>
+                    <td>
+                        @country.Name
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Customer", new { id = country.Id }, new { @class = "btn btn-secondary" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

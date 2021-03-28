@@ -5,4 +5,8 @@
     <RootNamespace>wine_app</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\wine-app.Domain\wine-app.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
