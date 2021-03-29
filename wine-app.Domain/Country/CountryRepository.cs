@@ -66,5 +66,36 @@ namespace wine_app.Domain.Country
                 return false;
             }
         }
+
+        public async Task<bool> Update(Country country)
+        {
+            var body = new StringContent(JsonConvert.SerializeObject(country), Encoding.UTF8, "application/json");
+            var client = _httpClient.CreateClient(ApiNames.WineApi);
+
+            var response = await client.PutAsync(_controllerUrl, body).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> Delete(int Id)
+        {
+            var client = _httpClient.CreateClient(ApiNames.WineApi);
+
+            var response = await client.DeleteAsync($"{_controllerUrl}/{Id}").ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

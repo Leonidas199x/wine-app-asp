@@ -10,5 +10,9 @@ namespace wine_app.Domain.Country
         Task<Country> Get(int Id);
 
         Task<bool> Create(Country country);
+
+        Task<bool> Update(Country country);
+
+        Task<bool> Delete(int Id);
     }
 }
