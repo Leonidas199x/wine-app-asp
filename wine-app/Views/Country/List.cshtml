@@ -2,10 +2,11 @@
 @{
     ViewData["Title"] = "Countries";
 }
+<script src="~/js/country.js"></script>
 
 <h1>Countries</h1>
 <div>
-    @Html.ActionLink("Add New Country", "Add", "Country", null, new { @class = "btn btn-secondary" })
+    @Html.ActionLink("Add New Country", "Insert", "Country", null, new { @class = "btn btn-secondary" })
 </div>
 <hr />
 <div class="row"></div>
@@ -42,6 +43,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", "Country", new { id = country.Id }, new { @class = "btn btn-secondary" })
+                        <button class="btn btn-danger" id="deleteButton" onclick="deleteCountry(@country.Id, @Html.Raw("'"+@country.Name+"'"))">Delete</button>
                     </td>
                 </tr>
             }
