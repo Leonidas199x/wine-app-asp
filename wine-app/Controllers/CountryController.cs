@@ -18,6 +18,7 @@ namespace wine_app.Controllers
             _countryMapper = countryMapper;
         }
 
+        [HttpGet]
         public async Task<IActionResult> List()
         {
             var domainCountries = await _countryService.GetAll().ConfigureAwait(false);
@@ -38,13 +39,38 @@ namespace wine_app.Controllers
         {
             var domainCountry = _countryMapper.Map<Domain.Country.Country>(model);
 
-            var saveResult = await _countryService.Save(domainCountry).ConfigureAwait(false);
+            var saveResult = await _countryService.Save(domainCountry, Domain.SaveType.Update).ConfigureAwait(false);
+            if (saveResult)
+            {
+                return RedirectToAction("Edit", "Country", new { id = model.Id });
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Insert()
+        {
+            return View(new EditableCountryViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Insert(EditableCountryViewModel model)
+        {
+            var domainCountry = _countryMapper.Map<Domain.Country.Country>(model);
+
+            var saveResult = await _countryService.Save(domainCountry, Domain.SaveType.Insert).ConfigureAwait(false);
             if(saveResult)
             {
                 return RedirectToAction("List", "Country", string.Empty);
             }
 
             return View();
+        }
+
+        public async Task Delete(int Id)
+        {
+            await _countryService.Delete(Id).ConfigureAwait(false);
         }
     }
 }
