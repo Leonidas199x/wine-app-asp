@@ -1,4 +1,4 @@
-﻿@model IEnumerable<wine_app.Models.Country.Country>
+﻿@model wine_app.Domain.Result<IEnumerable<wine_app.Models.Country.Country>>
 @{
     ViewData["Title"] = "Countries";
 }
@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var country in Model.OrderBy(x => x.Name))
+            @foreach (var country in Model.Data.OrderBy(x => x.Name))
             {
                 <tr>
                     <td>

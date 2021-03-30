@@ -1,21 +1,45 @@
-﻿@model wine_app.Models.Country.EditableCountryViewModel
+﻿@model wine_app.Domain.Result<wine_app.Models.Country.EditableCountryViewModel>
 @{
+    var model = Model.Data;
     ViewData["Title"] = "Edit Country";
-    @Html.HiddenFor(x => x.Id);
+    @Html.HiddenFor(x => x.Data.Id);
 }
+
+@if (!string.IsNullOrWhiteSpace(@Model.Error))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-danger">
+                <strong>@Model.Error</strong>
+            </div>
+        </div>
+    </div>
+}
+
+@if (@Model.IsSuccess)
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-success">
+                <strong>Save successful</strong>
+            </div>
+        </div>
+    </div>
+}
+
 <div class="form-group">
-    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Data.Name, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Data.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Data.Name, "", new { @class = "text-danger" })
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Data.Note, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(model => model.Data.Note, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Data.Note, "", new { @class = "text-danger" })
     </div>
 </div>
 

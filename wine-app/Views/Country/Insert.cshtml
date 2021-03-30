@@ -1,13 +1,13 @@
-﻿@model wine_app.Models.Country.EditableCountryViewModel
+﻿@model wine_app.Domain.Result<wine_app.Models.Country.EditableCountryViewModel>
 @{
-    ViewData["Title"] = "Create Country";
+    ViewData["Title"] = "Add Country";
 }
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Edit Customer</h4>
+        <h4>Add Country</h4>
         <hr />
         <partial name="_country" mdoel="model" />
     </div>
