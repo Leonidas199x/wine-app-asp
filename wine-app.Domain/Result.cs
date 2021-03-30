@@ -1,4 +1,6 @@
-﻿namespace wine_app.Domain
+﻿using System.Net;
+
+namespace wine_app.Domain
 {
     public class Result<T>
     {
@@ -41,6 +43,8 @@
 
         public string Error { get; set; }
 
+        public HttpStatusCode HttpStatusCode { get; set; }
+
         public Result() { }
 
         public Result(bool isSuccess)
@@ -52,6 +56,13 @@
         {
             IsSuccess = isSuccess;
             Error = errors;
+        }
+
+        public Result(string errors, bool isSuccess, HttpStatusCode statusCode)
+        {
+            Error = errors;
+            IsSuccess = isSuccess;
+            HttpStatusCode = statusCode;
         }
     }
 }
