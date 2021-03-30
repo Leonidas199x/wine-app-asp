@@ -32,7 +32,7 @@ namespace wine_app.Domain.Country
             return await _countryRepository.Update(country).ConfigureAwait(false);
         }
 
-        public async Task<bool> Delete(int Id)
+        public async Task<Result> Delete(int Id)
         {
             return await _countryRepository.Delete(Id).ConfigureAwait(false);
         }

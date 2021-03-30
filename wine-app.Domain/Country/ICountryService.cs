@@ -11,6 +11,6 @@ namespace wine_app.Domain.Country
 
         Task<Result> Save(Country country, SaveType saveType);
 
-        Task<bool> Delete(int Id);
+        Task<Result> Delete(int Id);
     }
 }
