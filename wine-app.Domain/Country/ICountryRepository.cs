@@ -5,14 +5,14 @@ namespace wine_app.Domain.Country
 {
     public interface ICountryRepository
     {
-        Task<IEnumerable<Country>> GetAll();
+        Task<Result<IEnumerable<Country>>> GetAll();
 
-        Task<Country> Get(int Id);
+        Task<Result<Country>> Get(int Id);
 
-        Task<bool> Create(Country country);
+        Task<Result> Create(Country country);
 
-        Task<bool> Update(Country country);
+        Task<Result> Update(Country country);
 
-        Task<bool> Delete(int Id);
+        Task<Result> Delete(int Id);
     }
 }

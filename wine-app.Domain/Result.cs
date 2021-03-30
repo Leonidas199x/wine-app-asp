@@ -10,6 +10,23 @@
 
         public Result() { }
 
+        public Result(T data)
+        {
+            Data = data;
+        }
+
+        public Result(T data, bool isSuccess)
+        {
+            Data = data;
+            IsSuccess = isSuccess;
+        }
+
+        public Result(string error, bool isSuccess)
+        {
+            Error = error;
+            IsSuccess = isSuccess;
+        }
+
         public Result(bool isSuccess, string errors, T data)
         {
             IsSuccess = isSuccess;

@@ -2,12 +2,33 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace wine_app.Domain
 {
     public static class HttpResponseHandler
     {
-        public static async Task<string> GetError(HttpResponseMessage response)
+        public static async Task<string> HandleHttpError(HttpResponseMessage response)
+        {
+            if(response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return await GetError(response).ConfigureAwait(false);
+            }
+
+            if(response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                return "Something went wrong, please try again. If the issue persists, please contact support";
+            }
+
+            if(response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return "Record not found";
+            }
+
+            return string.Empty;
+        }
+
+        private static async Task<string> GetError(HttpResponseMessage response)
         {
             var responseString = await response.Content.ReadAsStringAsync();
             var errors = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(responseString);
