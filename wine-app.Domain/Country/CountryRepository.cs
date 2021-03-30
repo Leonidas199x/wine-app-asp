@@ -103,7 +103,7 @@ namespace wine_app.Domain.Country
             else
             {
                 var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result(error, false);
+                return new Result(error, false, response.StatusCode);
             }
         }
     }
