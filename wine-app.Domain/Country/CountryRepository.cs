@@ -17,7 +17,7 @@ namespace wine_app.Domain.Country
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<Result<IEnumerable<Country>>> GetAll()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}");
             var client = _httpClient.CreateClient(ApiNames.WineApi);
@@ -26,15 +26,18 @@ namespace wine_app.Domain.Country
             if (response.IsSuccessStatusCode)
             {
                 var json = response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<IEnumerable<Country>>(json.Result);
+                var countries = JsonConvert.DeserializeObject<IEnumerable<Country>>(json.Result);
+
+                return new Result<IEnumerable<Country>>(countries, true);
             }
             else
             {
-                return null;
+                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
+                return new Result<IEnumerable<Country>>(error, false);
             }
         }
 
-        public async Task<Country> Get(int id)
+        public async Task<Result<Country>> Get(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/{id}");
             var client = _httpClient.CreateClient(ApiNames.WineApi);
@@ -43,15 +46,18 @@ namespace wine_app.Domain.Country
             if (response.IsSuccessStatusCode)
             {
                 var json = response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Country>(json.Result);
+                var country = JsonConvert.DeserializeObject<Country>(json.Result);
+
+                return new Result<Country>(country, true);
             }
             else
             {
-                return null;
+                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
+                return new Result<Country>(error, false);
             }
         }
 
-        public async Task<bool> Create(Country country)
+        public async Task<Result> Create(Country country)
         {
             var body = new StringContent(JsonConvert.SerializeObject(country), Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient(ApiNames.WineApi);
@@ -59,15 +65,16 @@ namespace wine_app.Domain.Country
             var response = await client.PostAsync(_controllerUrl, body).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                return true;
+                return new Result(true);
             }
             else
             {
-                return false;
+                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
+                return new Result(error, false);
             }
         }
 
-        public async Task<bool> Update(Country country)
+        public async Task<Result> Update(Country country)
         {
             var body = new StringContent(JsonConvert.SerializeObject(country), Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient(ApiNames.WineApi);
@@ -75,26 +82,28 @@ namespace wine_app.Domain.Country
             var response = await client.PutAsync(_controllerUrl, body).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                return true;
+                return new Result(true);
             }
             else
             {
-                return false;
+                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
+                return new Result(error, false);
             }
         }
 
-        public async Task<bool> Delete(int Id)
+        public async Task<Result> Delete(int Id)
         {
             var client = _httpClient.CreateClient(ApiNames.WineApi);
 
             var response = await client.DeleteAsync($"{_controllerUrl}/{Id}").ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
-                return true;
+                return new Result(true);
             }
             else
             {
-                return false;
+                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
+                return new Result(error, false);
             }
         }
     }
