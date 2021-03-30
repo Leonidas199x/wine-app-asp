@@ -12,17 +12,17 @@ namespace wine_app.Domain.Country
             _countryRepository = countryRepository;
         }
 
-        public async Task<IEnumerable<Country>> GetAll()
+        public async Task<Result<IEnumerable<Country>>> GetAll()
         {
             return await _countryRepository.GetAll().ConfigureAwait(false);
         }
 
-        public async Task<Country> Get(int Id)
+        public async Task<Result<Country>> Get(int Id)
         {
             return await _countryRepository.Get(Id).ConfigureAwait(false);
         }
 
-        public async Task<bool> Save(Country country, SaveType saveType)
+        public async Task<Result> Save(Country country, SaveType saveType)
         {
             if(saveType == SaveType.Insert)
             {

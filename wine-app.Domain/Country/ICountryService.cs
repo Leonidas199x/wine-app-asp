@@ -5,9 +5,9 @@ namespace wine_app.Domain.Country
 {
     public interface ICountryService
     {
-        Task<IEnumerable<Country>> GetAll();
+        Task<Result<IEnumerable<Country>>> GetAll();
 
-        Task<Country> Get(int Id);
+        Task<Result<Country>> Get(int Id);
 
         Task<Result> Save(Country country, SaveType saveType);
 
