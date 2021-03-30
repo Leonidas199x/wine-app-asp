@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
 
 namespace wine_app.Mappers
 {
@@ -8,7 +7,7 @@ namespace wine_app.Mappers
         public MappingProfile()
         {
             #region country
-            CreateMap<Domain.Country.Country, Models.Country.Country>();
+            CreateMap<Domain.Country.Country, Models.Country.Country>().ReverseMap();
             CreateMap<Domain.Country.Country, Models.Country.EditableCountryViewModel>().ReverseMap();
             #endregion
         }
