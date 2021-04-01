@@ -33,7 +33,7 @@ namespace wine_app.Controllers
         public async Task<IActionResult> Edit(int Id, bool isSuccess = false)
         {
             var domainCountry = await _countryService.Get(Id).ConfigureAwait(false);
-            var outboundCountry = _countryMapper.Map<EditableCountryViewModel>(domainCountry);
+            var outboundCountry = _countryMapper.Map<EditableCountryViewModel>(domainCountry.Data);
 
             return View(new Result<EditableCountryViewModel>(outboundCountry, isSuccess));
         }
