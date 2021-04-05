@@ -1,0 +1,44 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.Grape.EditableGrapeColourViewModel>
+@{
+    var model = Model.Data;
+    ViewData["Title"] = "Edit Grape Colour";
+    @Html.HiddenFor(x => x.Data.Id);
+    var buttonText = Model.IsSuccess ? "Back to list" : "Cancel";
+}
+
+@if (!string.IsNullOrWhiteSpace(@Model.Error))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-danger">
+                <strong>@Model.Error</strong>
+            </div>
+        </div>
+    </div>
+}
+
+@if (@Model.IsSuccess)
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-success">
+                <strong>Save successful</strong>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Data.Colour, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Data.Colour, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Data.Colour, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save" class="btn btn-success" />
+        @Html.ActionLink(buttonText, "ListColours", "Grape", null, new { @class = "btn btn-secondary" })
+    </div>
+</div>

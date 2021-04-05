@@ -16,5 +16,25 @@ namespace wine_app.Domain.Grape
         {
             return await _grapeRepository.GetAllColours().ConfigureAwait(false);
         }
+
+        public async Task<Result<GrapeColour>> GetColour(int Id)
+        {
+            return await _grapeRepository.GetColour(Id).ConfigureAwait(false);
+        }
+
+        public async Task<Result> SaveColour(GrapeColour grapeColour, SaveType saveType)
+        {
+            if (saveType == SaveType.Insert)
+            {
+                return await _grapeRepository.CreateColour(grapeColour).ConfigureAwait(false);
+            }
+
+            return await _grapeRepository.UpdateColour(grapeColour).ConfigureAwait(false);
+        }
+
+        public async Task<Result> DeleteColour(int Id)
+        {
+            return await _grapeRepository.DeleteColour(Id).ConfigureAwait(false);
+        }
     }
 }
