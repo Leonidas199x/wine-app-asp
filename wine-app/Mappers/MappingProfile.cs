@@ -10,6 +10,10 @@ namespace wine_app.Mappers
             CreateMap<Domain.Country.Country, Models.Country.Country>().ReverseMap();
             CreateMap<Domain.Country.Country, Models.Country.EditableCountryViewModel>().ReverseMap();
             #endregion
+
+            #region grape
+            CreateMap<Domain.Grape.GrapeColour, Models.Grape.GrapeColour>().ReverseMap();
+            #endregion
         }
     }
 }

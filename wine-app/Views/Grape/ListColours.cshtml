@@ -1,0 +1,40 @@
+﻿@model wine_app.Domain.Result<IEnumerable<wine_app.Models.Grape.GrapeColour>>
+@{
+    ViewData["Title"] = "Grape Colours";
+}
+<script src="~/js/grapecolour.js"></script>
+
+<h1>Grape Colours</h1>
+<div>
+    @Html.ActionLink("Add New Grape Colour", "InsertColour", "Grape", null, new { @class = "btn btn-secondary" })
+</div>
+<hr />
+<div class="row"></div>
+<div>
+    <table class="table" id="grapeColourTable">
+        <thead>
+            <tr id="header">
+                <th>
+                    Colour
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var colour in Model.Data.OrderBy(x => x.Colour))
+            {
+                <tr>
+                    <td>
+                        @colour.Colour
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditColour", "Grape", new { id = colour.Id }, new { @class = "btn btn-secondary" })
+                        <button class="btn btn-danger" id="deleteButton" onclick="deleteGrapeColour(@colour.Id, @Html.Raw("'"+colour.Colour+"'"))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
