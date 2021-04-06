@@ -84,10 +84,10 @@ namespace wine_app.Controllers
             return View(viewModel);
         }
 
+        [HttpDelete]
         public async Task<IActionResult> Delete(int Id)
         {
             var result = await _countryService.Delete(Id).ConfigureAwait(false);
-
             if(result.IsSuccess)
             {
                 return Ok();
