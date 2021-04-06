@@ -57,6 +57,33 @@ namespace wine_app.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult InsertColour()
+        {
+            return View(new Result<EditableGrapeColourViewModel>());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertColour(Result<EditableGrapeColourViewModel> model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(new Result<EditableGrapeColourViewModel>(model.Data));
+            }
+
+            var domainColour = _grapeMapper.Map<Domain.Grape.GrapeColour>(model.Data);
+
+            var saveResult = await _grapeService.SaveColour(domainColour, SaveType.Insert).ConfigureAwait(false);
+            if (saveResult.IsSuccess)
+            {
+                return RedirectToAction("ListColours", "Grape", string.Empty);
+            }
+
+            var viewModel = new Result<EditableGrapeColourViewModel>(saveResult.IsSuccess, saveResult.Error, model.Data);
+
+            return View(viewModel);
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteColour(int Id)
         {
