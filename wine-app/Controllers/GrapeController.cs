@@ -57,10 +57,10 @@ namespace wine_app.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Delete(int Id)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteColour(int Id)
         {
             var result = await _grapeService.DeleteColour(Id).ConfigureAwait(false);
-
             if (result.IsSuccess)
             {
                 return Ok();

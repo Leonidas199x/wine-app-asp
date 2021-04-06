@@ -13,6 +13,6 @@ namespace wine_app.Domain.Grape
 
         Task<Result> UpdateColour(GrapeColour grapeColour);
 
-        Task<Result> Delete(int Id);
+        Task<Result> DeleteColour(int Id);
     }
 }
