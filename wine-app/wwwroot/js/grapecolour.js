@@ -1,5 +1,5 @@
 ﻿function deleteGrapeColour(id, colour) {
-    if (confirm(`Are you sure you want to delete '${colour}' from the list of available countries?`)) {
+    if (confirm(`Are you sure you want to delete '${colour}' from the list of available colours?`)) {
         $.ajax({
             url: `/grape/deletecolour/${id}`,
             type: 'DELETE',
