@@ -12,6 +12,9 @@ namespace wine_app.Mappers
             #endregion
 
             #region grape
+            CreateMap<Domain.Grape.Grape, Models.Grape.Grape>().ReverseMap();
+            CreateMap<Domain.Grape.Grape, Models.Grape.GrapeViewModel>().ReverseMap();
+            CreateMap<Models.Grape.EditableGrapeViewModel, Domain.Grape.Grape>().ReverseMap();
             CreateMap<Domain.Grape.GrapeColour, Models.Grape.GrapeColour>().ReverseMap();
             CreateMap<Domain.Grape.GrapeColour, Models.Grape.EditableGrapeColourViewModel>().ReverseMap();
             #endregion
