@@ -12,6 +12,19 @@ namespace wine_app.Domain.Grape
             _grapeRepository = grapeRepository;
         }
 
+        #region grape
+        public async Task<Result<IEnumerable<Grape>>> GetGrapes()
+        {
+            return await _grapeRepository.GetGrapes().ConfigureAwait(false);
+        }
+
+        public async Task<Result<Grape>> GetGrape(int Id)
+        {
+            return await _grapeRepository.GetGrape(Id).ConfigureAwait(false);
+        }
+        #endregion
+
+        #region colours
         public async Task<Result<IEnumerable<GrapeColour>>> GetAllColours()
         {
             return await _grapeRepository.GetAllColours().ConfigureAwait(false);
@@ -36,5 +49,6 @@ namespace wine_app.Domain.Grape
         {
             return await _grapeRepository.DeleteColour(Id).ConfigureAwait(false);
         }
+        #endregion
     }
 }

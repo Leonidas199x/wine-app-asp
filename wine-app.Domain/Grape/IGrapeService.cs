@@ -5,6 +5,13 @@ namespace wine_app.Domain.Grape
 {
     public interface IGrapeService
     {
+        #region grape
+        Task<Result<IEnumerable<Grape>>> GetGrapes();
+
+        Task<Result<Grape>> GetGrape(int Id);
+        #endregion
+
+        #region colours
         Task<Result<IEnumerable<GrapeColour>>> GetAllColours();
 
         Task<Result<GrapeColour>> GetColour(int Id);
@@ -12,5 +19,6 @@ namespace wine_app.Domain.Grape
         Task<Result> SaveColour(GrapeColour grapeColour, SaveType saveType);
 
         Task<Result> DeleteColour(int Id);
+        #endregion
     }
 }

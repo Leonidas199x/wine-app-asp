@@ -5,6 +5,10 @@ namespace wine_app.Domain.Grape
 {
     public interface IGrapeRepository
     {
+        Task<Result<IEnumerable<Grape>>> GetGrapes();
+
+        Task<Result<Grape>> GetGrape(int Id);
+
         Task<Result<IEnumerable<GrapeColour>>> GetAllColours();
 
         Task<Result<GrapeColour>> GetColour(int id);

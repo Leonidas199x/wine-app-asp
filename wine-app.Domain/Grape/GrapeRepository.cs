@@ -18,6 +18,47 @@ namespace wine_app.Domain.Grape
             _httpClient = httpClient;
         }
 
+        #region grape
+        public async Task<Result<IEnumerable<Grape>>> GetGrapes()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}");
+            var client = _httpClient.CreateClient(ApiNames.WineApi);
+
+            var response = await client.SendAsync(request).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync();
+                var grapes = JsonConvert.DeserializeObject<IEnumerable<Grape>>(json.Result);
+
+                return new Result<IEnumerable<Grape>>(grapes, true);
+            }
+            else
+            {
+                return await HttpResponseHandler.HandleError<IEnumerable<Grape>>(response).ConfigureAwait(false);
+            }
+        }
+
+        public async Task<Result<Grape>> GetGrape(int id)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/{id}");
+            var client = _httpClient.CreateClient(ApiNames.WineApi);
+
+            var response = await client.SendAsync(request).ConfigureAwait(false);
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync();
+                var grape = JsonConvert.DeserializeObject<Grape>(json.Result);
+
+                return new Result<Grape>(grape, true);
+            }
+            else
+            {
+                return await HttpResponseHandler.HandleError<Grape>(response).ConfigureAwait(false);
+            }
+        }
+
+        #endregion
+
         #region grape colour
         public async Task<Result<IEnumerable<GrapeColour>>> GetAllColours()
         {
@@ -34,8 +75,7 @@ namespace wine_app.Domain.Grape
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result<IEnumerable<GrapeColour>>(error, false);
+                return await HttpResponseHandler.HandleError<IEnumerable<GrapeColour>>(response).ConfigureAwait(false);
             }
         }
 
@@ -54,8 +94,7 @@ namespace wine_app.Domain.Grape
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result<GrapeColour>(error, false);
+                return await HttpResponseHandler.HandleError<GrapeColour>(response).ConfigureAwait(false);
             }
         }
 
@@ -71,8 +110,7 @@ namespace wine_app.Domain.Grape
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result(error, false);
+                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
             }
         }
 
@@ -88,8 +126,7 @@ namespace wine_app.Domain.Grape
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result(error, false);
+                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
             }
         }
 
@@ -104,8 +141,7 @@ namespace wine_app.Domain.Grape
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result(error, false, response.StatusCode);
+                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
             }
         }
 
@@ -120,8 +156,7 @@ namespace wine_app.Domain.Grape
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result(error, false, response.StatusCode);
+                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
             }
         }
 
