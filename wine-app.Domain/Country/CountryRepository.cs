@@ -32,8 +32,7 @@ namespace wine_app.Domain.Country
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result<IEnumerable<Country>>(error, false);
+                return await HttpResponseHandler.HandleError<IEnumerable<Country>>(response).ConfigureAwait(false);
             }
         }
 
@@ -52,8 +51,7 @@ namespace wine_app.Domain.Country
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result<Country>(error, false);
+                return await HttpResponseHandler.HandleError<Country>(response).ConfigureAwait(false);
             }
         }
 
@@ -69,8 +67,7 @@ namespace wine_app.Domain.Country
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result(error, false);
+                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
             }
         }
 
@@ -86,8 +83,7 @@ namespace wine_app.Domain.Country
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result(error, false);
+                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
             }
         }
 
@@ -102,8 +98,7 @@ namespace wine_app.Domain.Country
             }
             else
             {
-                var error = await HttpResponseHandler.HandleHttpError(response).ConfigureAwait(false);
-                return new Result(error, false, response.StatusCode);
+                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
             }
         }
     }
