@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "Grape Colours";
 }
-<script src="~/js/grapecolour.js"></script>
+<script src="~/js/grape.js"></script>
 
 <h1>Grape Colours</h1>
 <div>
-    @Html.ActionLink("Add New Grape Colour", "InsertColour", "Grape", null, new { @class = "btn btn-secondary" })
+    <a class="btn btn-secondary" asp-controller="Grape" asp-action="InsertColour">Add new Grape Colour</a>
 </div>
 <hr />
 <div class="row"></div>
@@ -30,7 +30,7 @@
                         @colour.Colour
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "EditColour", "Grape", new { id = colour.Id }, new { @class = "btn btn-secondary" })
+                        <a class="btn btn-secondary" asp-controller="Grape" asp-action="EditColour" asp-route-id="@colour.Id">Edit</a>
                         <button class="btn btn-danger" id="deleteButton" onclick="deleteGrapeColour(@colour.Id, @Html.Raw("'"+colour.Colour+"'"))">Delete</button>
                     </td>
                 </tr>

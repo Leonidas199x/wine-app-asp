@@ -42,7 +42,7 @@
                         @country.DateCreated
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Country", new { id = country.Id }, new { @class = "btn btn-secondary" })
+                        <a class="btn btn-secondary" asp-controller="Country" asp-action="Edit" asp-route-id="@country.Id">Edit</a>
                         <button class="btn btn-danger" id="deleteButton" onclick="deleteCountry(@country.Id, @Html.Raw("'"+@country.Name+"'"))">Delete</button>
                     </td>
                 </tr>
