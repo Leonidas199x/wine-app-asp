@@ -1,7 +1,6 @@
 ﻿@model wine_app.Domain.Result<wine_app.Models.Grape.EditableGrapeColourViewModel>
 @{
     var model = Model.Data;
-    ViewData["Title"] = "Edit Grape Colour";
     @Html.HiddenFor(x => x.Data.Id);
     var buttonText = Model.IsSuccess ? "Back to list" : "Cancel";
 }
