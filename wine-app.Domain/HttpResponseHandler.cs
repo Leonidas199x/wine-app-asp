@@ -8,7 +8,19 @@ namespace wine_app.Domain
 {
     public static class HttpResponseHandler
     {
-        public static async Task<string> HandleHttpError(HttpResponseMessage response)
+        public static async Task<Result<T>> HandleError<T>(HttpResponseMessage response)
+        {
+            var error = await HandleHttpError(response).ConfigureAwait(false);
+            return new Result<T>(error, false, response.StatusCode);
+        }
+
+        public static async Task<Result> HandleError(HttpResponseMessage response)
+        {
+            var error = await HandleHttpError(response).ConfigureAwait(false);
+            return new Result(error, false, response.StatusCode);
+        }
+
+        private static async Task<string> HandleHttpError(HttpResponseMessage response)
         {
             if(response.StatusCode == HttpStatusCode.BadRequest)
             {

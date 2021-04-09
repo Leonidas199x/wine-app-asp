@@ -8,6 +8,8 @@ namespace wine_app.Domain
 
         public string Error { get; set; }
 
+        public HttpStatusCode StatusCode { get; set; }
+
         public T Data { get; set; }
 
         public Result() { }
@@ -27,6 +29,13 @@ namespace wine_app.Domain
         {
             Error = error;
             IsSuccess = isSuccess;
+        }
+
+        public Result(string error, bool isSuccess, HttpStatusCode statusCode)
+        {
+            Error = error;
+            IsSuccess = isSuccess;
+            StatusCode = statusCode;
         }
 
         public Result(bool isSuccess, string errors, T data)
