@@ -45,27 +45,35 @@ namespace wine_app.Controllers
         public async Task<IActionResult> InsertGrape()
         {
             var viewModel = new EditableGrapeViewModel();
-            var grapeColours = await _grapeService.GetAllColours().ConfigureAwait(false);
 
-            var selectList = new List<SelectListItem>()
-            {
-                new SelectListItem(),
-            };
-
-            foreach(var colour in grapeColours.Data)
-            {
-                var listItem = new SelectListItem
-                {
-                    Value = colour.Id.ToString(),
-                    Text = colour.Colour,
-                };
-
-                selectList.Add(listItem);
-            }
-
-            viewModel.GrapeColours = selectList;
+            viewModel.GrapeColours = await GetGrapeColours().ConfigureAwait(false);
 
             return View(new Result<EditableGrapeViewModel>(viewModel));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertGrape(Result<EditableGrapeViewModel> model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Data.GrapeColours = await GetGrapeColours().ConfigureAwait(false);
+                return View(new Result<EditableGrapeViewModel>(model.Data));
+            }
+
+            var domainGrape = _grapeMapper.Map<Domain.Grape.Grape>(model.Data);
+
+            var saveResult = await _grapeService.SaveGrape(domainGrape, SaveType.Insert).ConfigureAwait(false);
+            if (saveResult.IsSuccess)
+            {
+                return RedirectToAction("ListGrapes", "Grape", string.Empty);
+            }
+
+            var viewModel = new Result<EditableGrapeViewModel>
+                (saveResult.IsSuccess, saveResult.Error, model.Data);
+
+            viewModel.Data.GrapeColours = await GetGrapeColours().ConfigureAwait(false);
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -73,26 +81,8 @@ namespace wine_app.Controllers
         {
             var domainGrape = await _grapeService.GetGrape(Id).ConfigureAwait(false);
             var viewModel = _grapeMapper.Map<EditableGrapeViewModel>(domainGrape.Data);
-            var grapeColours = await _grapeService.GetAllColours().ConfigureAwait(false);
 
-            var selectList = new List<SelectListItem>()
-            {
-                new SelectListItem(),
-            };
-
-            foreach (var colour in grapeColours.Data)
-            {
-                var listItem = new SelectListItem
-                {
-                    Value = colour.Id.ToString(),
-                    Text = colour.Colour,
-                    Selected = colour.Id == viewModel.Id,
-                };
-
-                selectList.Add(listItem);
-            }
-
-            viewModel.GrapeColours = selectList;
+            viewModel.GrapeColours = await GetGrapeColours().ConfigureAwait(false);
 
             return View(new Result<EditableGrapeViewModel>(viewModel, isSuccess));
         }
@@ -192,5 +182,28 @@ namespace wine_app.Controllers
             }
         }
         #endregion
+
+        private async Task<IEnumerable<SelectListItem>> GetGrapeColours()
+        {
+            var grapeColours = await _grapeService.GetAllColours().ConfigureAwait(false);
+
+            var selectList = new List<SelectListItem>()
+            {
+                new SelectListItem(),
+            };
+
+            foreach (var colour in grapeColours.Data)
+            {
+                var listItem = new SelectListItem
+                {
+                    Value = colour.Id.ToString(),
+                    Text = colour.Colour,
+                };
+
+                selectList.Add(listItem);
+            }
+
+            return selectList;
+        }
     }
 }
