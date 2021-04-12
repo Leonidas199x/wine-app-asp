@@ -5,6 +5,16 @@
 <script src="~/js/grape.js"></script>
 
 <h1>Grapes</h1>
+@if (!string.IsNullOrWhiteSpace(@Model.Error))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-danger">
+                <strong>@Model.Error</strong>
+            </div>
+        </div>
+    </div>
+}
 <div>
     @Html.ActionLink("Add New Grape", "InsertGrape", "Grape", null, new { @class = "btn btn-secondary" })
 </div>
@@ -34,24 +44,24 @@
         <tbody>
             @foreach (var grape in Model.Data.OrderBy(x => x.Name))
             {
-            <tr>
-                <td>
-                    @grape.Name
-                </td>
-                <td>
-                    @grape.GrapeColourString
-                </td>
-                <td>
-                    @grape.Note
-                </td>
-                <td>
-                    @grape.DateCreated
-                </td>
-                <td>
-                    <a class="btn btn-secondary" asp-controller="Grape" asp-action="EditGrape" asp-route-id="@grape.Id">Edit</a>
-                    <button class="btn btn-danger" id="deleteButton" onclick="deleteGrape(@grape.Id, @Html.Raw("'"+grape.Name+"'"))">Delete</button>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @grape.Name
+                    </td>
+                    <td>
+                        @grape.GrapeColourString
+                    </td>
+                    <td>
+                        @grape.Note
+                    </td>
+                    <td>
+                        @grape.DateCreated
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary" asp-controller="Grape" asp-action="EditGrape" asp-route-id="@grape.Id">Edit</a>
+                        <button class="btn btn-danger" id="deleteButton" onclick="deleteGrape(@grape.Id, @Html.Raw("'"+grape.Name+"'"))">Delete</button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

@@ -5,6 +5,16 @@
 <script src="~/js/country.js"></script>
 
 <h1>Countries</h1>
+@if (!string.IsNullOrWhiteSpace(@Model.Error))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-danger">
+                <strong>@Model.Error</strong>
+            </div>
+        </div>
+    </div>
+}
 <div>
     @Html.ActionLink("Add New Country", "Insert", "Country", null, new { @class = "btn btn-secondary" })
 </div>

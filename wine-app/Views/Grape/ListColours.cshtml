@@ -9,6 +9,16 @@
     <a class="btn btn-secondary" asp-controller="Grape" asp-action="InsertColour">Add new Grape Colour</a>
 </div>
 <hr />
+@if (!string.IsNullOrWhiteSpace(@Model.Error))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-danger">
+                <strong>@Model.Error</strong>
+            </div>
+        </div>
+    </div>
+}
 <div class="row"></div>
 <div>
     <table class="table" id="grapeColourTable">
