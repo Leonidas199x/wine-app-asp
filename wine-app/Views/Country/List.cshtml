@@ -1,11 +1,12 @@
 ﻿@model wine_app.Domain.Result<IEnumerable<wine_app.Models.Country.Country>>
 @{
     ViewData["Title"] = "Countries";
+    var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
 }
 <script src="~/js/country.js"></script>
 
 <h1>Countries</h1>
-@if (!string.IsNullOrWhiteSpace(@Model.Error))
+@if (hasErrors)
 {
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -16,7 +17,7 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Add New Country", "Insert", "Country", null, new { @class = "btn btn-secondary" })
+    <a class="btn btn-secondary" asp-controller="Country" asp-action="Insert" disabled=hasErrors>Add New Country</a>
 </div>
 <hr />
 <div class="row"></div>
