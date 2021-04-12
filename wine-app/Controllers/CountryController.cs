@@ -23,10 +23,14 @@ namespace wine_app.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var domainCountries = await _countryService.GetAll().ConfigureAwait(false);
-            var outboundCountries = _countryMapper.Map<IEnumerable<Models.Country.Country>>(domainCountries.Data);
+            var countriesResult = await _countryService.GetAll().ConfigureAwait(false);
+            var outboundCountries = _countryMapper
+                .Map<IEnumerable<Models.Country.Country>>(countriesResult.Data);
 
-            return View(new Result<IEnumerable<Models.Country.Country>>(outboundCountries));
+            var viewModel = new Result<IEnumerable<Models.Country.Country>>
+                (countriesResult.IsSuccess, countriesResult.Error, outboundCountries);
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -79,7 +83,8 @@ namespace wine_app.Controllers
                 return RedirectToAction("List", "Country", string.Empty);
             }
 
-            var viewModel = new Result<EditableCountryViewModel>(saveResult.IsSuccess, saveResult.Error, model.Data);
+            var viewModel = new Result<EditableCountryViewModel>
+                (saveResult.IsSuccess, saveResult.Error, model.Data);
 
             return View(viewModel);
         }

@@ -35,7 +35,9 @@ namespace wine_app.Controllers
                 grape.GrapeColourString = grapeColoursResult.Data.Where(x => x.Id == grape.GrapeColourId).FirstOrDefault().Colour;
             }
 
-            var viewModel = new Result<IEnumerable<GrapeViewModel>>(grapeColoursResult.IsSuccess, grapeColoursResult.Error, grapeViewModel);
+            var viewModel = new Result<IEnumerable<GrapeViewModel>>
+                (grapeColoursResult.IsSuccess, grapeColoursResult.Error, grapeViewModel);
+
             return View(viewModel);
         }
 
@@ -100,10 +102,13 @@ namespace wine_app.Controllers
         [HttpGet]
         public async Task<IActionResult> ListColours()
         {
-            var domainGrapeColours = await _grapeService.GetAllColours().ConfigureAwait(false);
-            var outboundGrapeColours = _grapeMapper.Map<IEnumerable<Models.Grape.GrapeColour>>(domainGrapeColours.Data);
+            var grapeColoursResult = await _grapeService.GetAllColours().ConfigureAwait(false);
+            var outboundGrapeColours = _grapeMapper.Map<IEnumerable<Models.Grape.GrapeColour>>(grapeColoursResult.Data);
 
-            return View(new Result<IEnumerable<Models.Grape.GrapeColour>>(outboundGrapeColours));
+            var viewModel = new Result<IEnumerable<Models.Grape.GrapeColour>>
+                (grapeColoursResult.IsSuccess, grapeColoursResult.Error, outboundGrapeColours);
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -131,7 +136,8 @@ namespace wine_app.Controllers
                 return RedirectToAction("EditColour", "Grape", new { id = model.Data.Id, IsSuccess = true });
             }
 
-            var viewModel = new Result<EditableGrapeColourViewModel>(saveResult.IsSuccess, saveResult.Error, model.Data);
+            var viewModel = new Result<EditableGrapeColourViewModel>
+                (saveResult.IsSuccess, saveResult.Error, model.Data);
 
             return View(viewModel);
         }
@@ -158,7 +164,8 @@ namespace wine_app.Controllers
                 return RedirectToAction("ListColours", "Grape", string.Empty);
             }
 
-            var viewModel = new Result<EditableGrapeColourViewModel>(saveResult.IsSuccess, saveResult.Error, model.Data);
+            var viewModel = new Result<EditableGrapeColourViewModel>
+                (saveResult.IsSuccess, saveResult.Error, model.Data);
 
             return View(viewModel);
         }
