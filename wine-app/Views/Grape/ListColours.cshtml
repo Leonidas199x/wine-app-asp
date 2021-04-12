@@ -1,24 +1,26 @@
 ﻿@model wine_app.Domain.Result<IEnumerable<wine_app.Models.Grape.GrapeColour>>
 @{
     ViewData["Title"] = "Grape Colours";
+    var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
 }
 <script src="~/js/grape.js"></script>
 
 <h1>Grape Colours</h1>
-<div>
-    <a class="btn btn-secondary" asp-controller="Grape" asp-action="InsertColour">Add new Grape Colour</a>
-</div>
-<hr />
-@if (!string.IsNullOrWhiteSpace(@Model.Error))
+@if (hasErrors)
 {
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <div class="alert alert-danger">
-                <strong>@Model.Error</strong>
-            </div>
+        <div class="alert alert-danger">
+            <strong>@Model.Error</strong>
         </div>
     </div>
 }
+<div>
+    @if (!hasErrors)
+    {
+        <a class="btn btn-secondary" asp-controller="Grape" asp-action="InsertColour">Add new Grape Colour</a>
+    }
+    </div>
+<hr />
 <div class="row"></div>
 <div>
     <table class="table" id="grapeColourTable">
