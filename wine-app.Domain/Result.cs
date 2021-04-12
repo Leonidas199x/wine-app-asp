@@ -25,10 +25,9 @@ namespace wine_app.Domain
             IsSuccess = isSuccess;
         }
 
-        public Result(string error, bool isSuccess)
+        public Result(bool isSuccess, string errors, T data) : this(data, isSuccess)
         {
-            Error = error;
-            IsSuccess = isSuccess;
+            Error = errors;
         }
 
         public Result(string error, bool isSuccess, HttpStatusCode statusCode)
@@ -36,13 +35,6 @@ namespace wine_app.Domain
             Error = error;
             IsSuccess = isSuccess;
             StatusCode = statusCode;
-        }
-
-        public Result(bool isSuccess, string errors, T data)
-        {
-            IsSuccess = isSuccess;
-            Error = errors;
-            Data = data;
         }
     }
 
@@ -61,16 +53,13 @@ namespace wine_app.Domain
             IsSuccess = isSuccess;
         }
 
-        public Result(string errors, bool isSuccess)
+        public Result(string errors, bool isSuccess) : this(isSuccess)
         {
-            IsSuccess = isSuccess;
             Error = errors;
         }
 
-        public Result(string errors, bool isSuccess, HttpStatusCode statusCode)
+        public Result(string errors, bool isSuccess, HttpStatusCode statusCode) : this(errors, isSuccess)
         {
-            Error = errors;
-            IsSuccess = isSuccess;
             HttpStatusCode = statusCode;
         }
     }
