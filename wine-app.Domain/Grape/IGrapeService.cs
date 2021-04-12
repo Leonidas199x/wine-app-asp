@@ -9,6 +9,8 @@ namespace wine_app.Domain.Grape
         Task<Result<IEnumerable<Grape>>> GetGrapes();
 
         Task<Result<Grape>> GetGrape(int Id);
+
+        Task<Result> SaveGrape(Grape grape, SaveType saveType);
         #endregion
 
         #region colours

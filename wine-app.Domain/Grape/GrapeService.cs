@@ -22,6 +22,16 @@ namespace wine_app.Domain.Grape
         {
             return await _grapeRepository.GetGrape(Id).ConfigureAwait(false);
         }
+
+        public async Task<Result> SaveGrape(Grape grape, SaveType saveType)
+        {
+            if (saveType == SaveType.Insert)
+            {
+                return await _grapeRepository.CreateGrape(grape).ConfigureAwait(false);
+            }
+
+            return await _grapeRepository.UpdateGrape(grape).ConfigureAwait(false);
+        }
         #endregion
 
         #region colours

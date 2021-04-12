@@ -31,6 +31,18 @@ namespace wine_app.Domain.Grape
             return await _httpRequestHandler.SendAsync<Grape>(request).ConfigureAwait(false);
         }
 
+        public async Task<Result> CreateGrape(Grape grape)
+        {
+            var body = new StringContent(JsonConvert.SerializeObject(grape), Encoding.UTF8, "application/json");
+            return await _httpRequestHandler.PostAsync(_controllerUrl, body).ConfigureAwait(false);
+        }
+
+        public async Task<Result> UpdateGrape(Grape grape)
+        {
+            var body = new StringContent(JsonConvert.SerializeObject(grape), Encoding.UTF8, "application/json");
+            return await _httpRequestHandler.PutAsync($"{_controllerUrl}/{grape.Id}", body).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region grape colour
