@@ -10,96 +10,41 @@ namespace wine_app.Domain.Country
     {
         private readonly string _controllerUrl = "country";
 
-        private readonly IHttpClientFactory _httpClient;
+        private readonly IHttpRequestHandler _httpRequestHandler;
 
-        public CountryRepository(IHttpClientFactory httpClient)
+        public CountryRepository(IHttpRequestHandler httpRequestHandler)
         {
-            _httpClient = httpClient;
+            _httpRequestHandler = httpRequestHandler;
         }
 
         public async Task<Result<IEnumerable<Country>>> GetAll()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}");
-            var client = _httpClient.CreateClient(ApiNames.WineApi);
-
-            var response = await client.SendAsync(request).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                var json = response.Content.ReadAsStringAsync();
-                var countries = JsonConvert.DeserializeObject<IEnumerable<Country>>(json.Result);
-
-                return new Result<IEnumerable<Country>>(countries, true);
-            }
-            else
-            {
-                return await HttpResponseHandler.HandleError<IEnumerable<Country>>(response).ConfigureAwait(false);
-            }
+            return await _httpRequestHandler.SendAsync<IEnumerable<Country>>(request).ConfigureAwait(false);
         }
 
         public async Task<Result<Country>> Get(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/{id}");
-            var client = _httpClient.CreateClient(ApiNames.WineApi);
-
-            var response = await client.SendAsync(request).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                var json = response.Content.ReadAsStringAsync();
-                var country = JsonConvert.DeserializeObject<Country>(json.Result);
-
-                return new Result<Country>(country, true);
-            }
-            else
-            {
-                return await HttpResponseHandler.HandleError<Country>(response).ConfigureAwait(false);
-            }
+            return await _httpRequestHandler.SendAsync<Country>(request).ConfigureAwait(false);
         }
 
         public async Task<Result> Create(Country country)
         {
             var body = new StringContent(JsonConvert.SerializeObject(country), Encoding.UTF8, "application/json");
-            var client = _httpClient.CreateClient(ApiNames.WineApi);
-
-            var response = await client.PostAsync(_controllerUrl, body).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                return new Result(true);
-            }
-            else
-            {
-                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
-            }
+            return await _httpRequestHandler.PostAsync(_controllerUrl, body).ConfigureAwait(false);
         }
 
         public async Task<Result> Update(Country country)
         {
             var body = new StringContent(JsonConvert.SerializeObject(country), Encoding.UTF8, "application/json");
-            var client = _httpClient.CreateClient(ApiNames.WineApi);
-
-            var response = await client.PutAsync(_controllerUrl, body).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                return new Result(true);
-            }
-            else
-            {
-                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
-            }
+            return await _httpRequestHandler.PutAsync(_controllerUrl, body).ConfigureAwait(false);
         }
 
         public async Task<Result> Delete(int Id)
         {
-            var client = _httpClient.CreateClient(ApiNames.WineApi);
-
-            var response = await client.DeleteAsync($"{_controllerUrl}/{Id}").ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                return new Result(true);
-            }
-            else
-            {
-                return await HttpResponseHandler.HandleError(response).ConfigureAwait(false);
-            }
+            var url = $"{_controllerUrl}/{Id}";
+            return await _httpRequestHandler.DeleteAsync(url).ConfigureAwait(false);
         }
     }
 }
