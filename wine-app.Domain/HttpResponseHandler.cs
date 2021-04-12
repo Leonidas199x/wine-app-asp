@@ -17,7 +17,7 @@ namespace wine_app.Domain
         public static async Task<Result> HandleError(HttpResponseMessage response)
         {
             var error = await HandleHttpError(response).ConfigureAwait(false);
-            return new Result(error, false, response.StatusCode);
+            return new Result(error, response.IsSuccessStatusCode, response.StatusCode);
         }
 
         private static async Task<string> HandleHttpError(HttpResponseMessage response)

@@ -26,7 +26,7 @@ namespace wine_app.Domain
                     var json = response.Content.ReadAsStringAsync();
                     var data = JsonConvert.DeserializeObject<T>(json.Result);
 
-                    return new Result<T>(data, true);
+                    return new Result<T>(data, response.IsSuccessStatusCode);
                 }
                 else
                 {
@@ -47,7 +47,7 @@ namespace wine_app.Domain
                 var response = await client.PostAsync(url, body).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
-                    return new Result(true);
+                    return new Result(response.IsSuccessStatusCode);
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace wine_app.Domain
                 var response = await client.PutAsync(url, body).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
-                    return new Result(true);
+                    return new Result(response.IsSuccessStatusCode);
                 }
                 else
                 {
@@ -91,7 +91,7 @@ namespace wine_app.Domain
                 var response = await client.DeleteAsync(url).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
-                    return new Result(true);
+                    return new Result(response.IsSuccessStatusCode);
                 }
                 else
                 {
