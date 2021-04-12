@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using wine_app.Domain;
 using wine_app.Domain.Country;
 using wine_app.Domain.Grape;
 using wine_app.Mappers;
@@ -27,6 +28,7 @@ namespace wine_app
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddTransient<IGrapeService, GrapeService>();
             services.AddTransient<IGrapeRepository, GrapeRepository>();
+            services.AddTransient<IHttpRequestHandler, HttpRequestHandler>();
 
             //Register automapper
             services.AddAutoMapper(typeof(MappingProfile));
