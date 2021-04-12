@@ -37,7 +37,7 @@ namespace wine_app.Domain
                 return "Record not found";
             }
 
-            return string.Empty;
+            return "Ooops, something isn't working as expected.";
         }
 
         private static async Task<string> GetError(HttpResponseMessage response)
