@@ -34,7 +34,7 @@ namespace wine_app.Domain
 
             if(response.StatusCode == HttpStatusCode.NotFound)
             {
-                return "Record not found";
+                return "Not found";
             }
 
             return "Ooops, something isn't working as expected.";
