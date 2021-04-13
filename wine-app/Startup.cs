@@ -33,7 +33,7 @@ namespace wine_app
             //Register automapper
             services.AddAutoMapper(typeof(MappingProfile));
 
-            services.AddHttpClient(Domain.ApiNames.WineApi, c =>
+            services.AddHttpClient(ApiNames.WineApi, c =>
             {
                 c.BaseAddress = new Uri(Configuration.GetSection("WineApiBaseAddress").Value);
             });
