@@ -34,9 +34,9 @@ namespace wine_app.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int Id, bool isSuccess = false)
+        public async Task<IActionResult> Edit(int id, bool isSuccess = false)
         {
-            var domainCountry = await _countryService.Get(Id).ConfigureAwait(false);
+            var domainCountry = await _countryService.Get(id).ConfigureAwait(false);
             var outboundCountry = _countryMapper.Map<EditableCountryViewModel>(domainCountry.Data);
 
             return View(new Result<EditableCountryViewModel>(outboundCountry, isSuccess));
@@ -90,9 +90,9 @@ namespace wine_app.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(int Id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = await _countryService.Delete(Id).ConfigureAwait(false);
+            var result = await _countryService.Delete(id).ConfigureAwait(false);
             if(result.IsSuccess)
             {
                 return Ok();
