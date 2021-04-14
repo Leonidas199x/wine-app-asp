@@ -35,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var colour in Model.Data.OrderBy(x => x.Colour))
+            @foreach (var colour in Model.Data.OrderBy(x => x.Colour).ThenBy(x => x.Id))
             {
                 <tr>
                     <td>

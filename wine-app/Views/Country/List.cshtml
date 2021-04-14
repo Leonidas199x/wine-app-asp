@@ -41,7 +41,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var country in Model.Data.OrderBy(x => x.Name))
+            @foreach (var country in Model.Data.OrderBy(x => x.Name).ThenBy(x => x.Id))
             {
                 <tr>
                     <td>
