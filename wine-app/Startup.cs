@@ -7,6 +7,7 @@ using System;
 using wine_app.Domain;
 using wine_app.Domain.Country;
 using wine_app.Domain.Grape;
+using wine_app.Domain.Region;
 using wine_app.Mappers;
 
 namespace wine_app
@@ -28,6 +29,8 @@ namespace wine_app
             services.AddTransient<ICountryRepository, CountryRepository>();
             services.AddTransient<IGrapeService, GrapeService>();
             services.AddTransient<IGrapeRepository, GrapeRepository>();
+            services.AddTransient<IRegionService, RegionService>();
+            services.AddTransient<IRegionRepository, RegionRepository>();
             services.AddTransient<IHttpRequestHandler, HttpRequestHandler>();
 
             //Register automapper
