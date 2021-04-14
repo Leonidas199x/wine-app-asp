@@ -11,6 +11,8 @@ namespace wine_app.Domain.Grape
         Task<Result<Grape>> GetGrape(int Id);
 
         Task<Result> SaveGrape(Grape grape, SaveType saveType);
+
+        Task<Result> DeleteGrape(int id);
         #endregion
 
         #region colours

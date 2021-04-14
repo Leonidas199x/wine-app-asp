@@ -41,9 +41,9 @@ namespace wine_app.Domain.Country
             return await _httpRequestHandler.PutAsync(_controllerUrl, body).ConfigureAwait(false);
         }
 
-        public async Task<Result> Delete(int Id)
+        public async Task<Result> Delete(int id)
         {
-            var url = $"{_controllerUrl}/{Id}";
+            var url = $"{_controllerUrl}/{id}";
             return await _httpRequestHandler.DeleteAsync(url).ConfigureAwait(false);
         }
     }

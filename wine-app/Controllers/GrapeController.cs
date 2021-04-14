@@ -32,7 +32,9 @@ namespace wine_app.Controllers
 
             foreach(var grape in grapeViewModel)
             {
-                grape.GrapeColourString = grapeColoursResult.Data.Where(x => x.Id == grape.GrapeColourId).FirstOrDefault().Colour;
+                grape.GrapeColourString = grapeColoursResult
+                    .Data
+                    .Where(x => x.Id == grape.GrapeColourId).FirstOrDefault().Colour;
             }
 
             var viewModel = new Result<IEnumerable<GrapeViewModel>>
@@ -62,7 +64,9 @@ namespace wine_app.Controllers
 
             var domainGrape = _grapeMapper.Map<Domain.Grape.Grape>(model.Data);
 
-            var saveResult = await _grapeService.SaveGrape(domainGrape, SaveType.Insert).ConfigureAwait(false);
+            var saveResult = await _grapeService
+                .SaveGrape(domainGrape, SaveType.Insert)
+                .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
                 return RedirectToAction("ListGrapes", "Grape", string.Empty);
@@ -77,14 +81,36 @@ namespace wine_app.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditGrape(int Id, bool isSuccess = false)
+        public async Task<IActionResult> EditGrape(int id, bool isSuccess = false)
         {
-            var domainGrape = await _grapeService.GetGrape(Id).ConfigureAwait(false);
+            var domainGrape = await _grapeService.GetGrape(id).ConfigureAwait(false);
             var viewModel = _grapeMapper.Map<EditableGrapeViewModel>(domainGrape.Data);
 
             viewModel.GrapeColours = await GetGrapeColours().ConfigureAwait(false);
 
             return View(new Result<EditableGrapeViewModel>(viewModel, isSuccess));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteGrape(int id)
+        {
+            var result = await _grapeService.DeleteGrape(id).ConfigureAwait(false);
+            if (result.IsSuccess)
+            {
+                return Ok();
+            }
+
+            switch (result.HttpStatusCode)
+            {
+                case HttpStatusCode.BadRequest:
+                    return BadRequest();
+                case HttpStatusCode.NotFound:
+                    return NotFound();
+                case HttpStatusCode.InternalServerError:
+                    return StatusCode(500);
+                default:
+                    return BadRequest();
+            }
         }
         #endregion
 
@@ -93,7 +119,8 @@ namespace wine_app.Controllers
         public async Task<IActionResult> ListColours()
         {
             var grapeColoursResult = await _grapeService.GetAllColours().ConfigureAwait(false);
-            var outboundGrapeColours = _grapeMapper.Map<IEnumerable<Models.Grape.GrapeColour>>(grapeColoursResult.Data);
+            var outboundGrapeColours = _grapeMapper.Map<IEnumerable<Models.Grape.GrapeColour>>
+                (grapeColoursResult.Data);
 
             var viewModel = new Result<IEnumerable<Models.Grape.GrapeColour>>
                 (grapeColoursResult.IsSuccess, grapeColoursResult.Error, outboundGrapeColours);
@@ -102,9 +129,9 @@ namespace wine_app.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditColour(int Id, bool isSuccess = false)
+        public async Task<IActionResult> EditColour(int id, bool isSuccess = false)
         {
-            var domainGrapeColour = await _grapeService.GetColour(Id).ConfigureAwait(false);
+            var domainGrapeColour = await _grapeService.GetColour(id).ConfigureAwait(false);
             var outboundGrapeColour = _grapeMapper.Map<EditableGrapeColourViewModel>(domainGrapeColour.Data);
 
             return View(new Result<EditableGrapeColourViewModel>(outboundGrapeColour, isSuccess));
@@ -120,7 +147,9 @@ namespace wine_app.Controllers
 
             var domainGrapeColour = _grapeMapper.Map<Domain.Grape.GrapeColour>(model.Data);
 
-            var saveResult = await _grapeService.SaveColour(domainGrapeColour, SaveType.Update).ConfigureAwait(false);
+            var saveResult = await _grapeService
+                .SaveColour(domainGrapeColour, SaveType.Update)
+                .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
                 return RedirectToAction("EditColour", "Grape", new { id = model.Data.Id, IsSuccess = true });
@@ -161,9 +190,9 @@ namespace wine_app.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteColour(int Id)
+        public async Task<IActionResult> DeleteColour(int id)
         {
-            var result = await _grapeService.DeleteColour(Id).ConfigureAwait(false);
+            var result = await _grapeService.DeleteColour(id).ConfigureAwait(false);
             if (result.IsSuccess)
             {
                 return Ok();

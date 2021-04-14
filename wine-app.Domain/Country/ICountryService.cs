@@ -7,10 +7,10 @@ namespace wine_app.Domain.Country
     {
         Task<Result<IEnumerable<Country>>> GetAll();
 
-        Task<Result<Country>> Get(int Id);
+        Task<Result<Country>> Get(int id);
 
         Task<Result> Save(Country country, SaveType saveType);
 
-        Task<Result> Delete(int Id);
+        Task<Result> Delete(int id);
     }
 }

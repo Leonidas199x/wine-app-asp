@@ -43,6 +43,11 @@ namespace wine_app.Domain.Grape
             return await _httpRequestHandler.PutAsync($"{_controllerUrl}/{grape.Id}", body).ConfigureAwait(false);
         }
 
+        public async Task<Result> DeleteGrape(int id)
+        {
+            var url = $"{_grapeColourUrl}/{id}";
+            return await _httpRequestHandler.DeleteAsync(url).ConfigureAwait(false);
+        }
         #endregion
 
         #region grape colour
@@ -70,9 +75,9 @@ namespace wine_app.Domain.Grape
             return await _httpRequestHandler.PutAsync($"{_grapeColourUrl}/{grapeColour.Id}", body).ConfigureAwait(false);
         }
 
-        public async Task<Result> DeleteColour(int Id)
+        public async Task<Result> DeleteColour(int id)
         {
-            var url = $"{_grapeColourUrl}/{Id}";
+            var url = $"{_grapeColourUrl}/{id}";
             return await _httpRequestHandler.DeleteAsync(url).ConfigureAwait(false);
         }
         #endregion

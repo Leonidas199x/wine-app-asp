@@ -8,11 +8,13 @@ namespace wine_app.Domain.Grape
         #region grape
         Task<Result<IEnumerable<Grape>>> GetGrapes();
 
-        Task<Result<Grape>> GetGrape(int Id);
+        Task<Result<Grape>> GetGrape(int id);
 
         Task<Result> CreateGrape(Grape grape);
 
         Task<Result> UpdateGrape(Grape grape);
+
+        Task<Result> DeleteGrape(int id);
         #endregion
 
         #region GrapeColour
@@ -24,7 +26,7 @@ namespace wine_app.Domain.Grape
 
         Task<Result> UpdateColour(GrapeColour grapeColour);
 
-        Task<Result> DeleteColour(int Id);
+        Task<Result> DeleteColour(int id);
         #endregion
     }
 }

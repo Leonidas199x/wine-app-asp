@@ -18,9 +18,9 @@ namespace wine_app.Domain.Grape
             return await _grapeRepository.GetGrapes().ConfigureAwait(false);
         }
 
-        public async Task<Result<Grape>> GetGrape(int Id)
+        public async Task<Result<Grape>> GetGrape(int id)
         {
-            return await _grapeRepository.GetGrape(Id).ConfigureAwait(false);
+            return await _grapeRepository.GetGrape(id).ConfigureAwait(false);
         }
 
         public async Task<Result> SaveGrape(Grape grape, SaveType saveType)
@@ -32,6 +32,11 @@ namespace wine_app.Domain.Grape
 
             return await _grapeRepository.UpdateGrape(grape).ConfigureAwait(false);
         }
+
+        public async Task<Result> DeleteGrape(int id)
+        {
+            return await _grapeRepository.DeleteGrape(id).ConfigureAwait(false);
+        }
         #endregion
 
         #region colours
@@ -40,9 +45,9 @@ namespace wine_app.Domain.Grape
             return await _grapeRepository.GetAllColours().ConfigureAwait(false);
         }
 
-        public async Task<Result<GrapeColour>> GetColour(int Id)
+        public async Task<Result<GrapeColour>> GetColour(int id)
         {
-            return await _grapeRepository.GetColour(Id).ConfigureAwait(false);
+            return await _grapeRepository.GetColour(id).ConfigureAwait(false);
         }
 
         public async Task<Result> SaveColour(GrapeColour grapeColour, SaveType saveType)
@@ -55,9 +60,9 @@ namespace wine_app.Domain.Grape
             return await _grapeRepository.UpdateColour(grapeColour).ConfigureAwait(false);
         }
 
-        public async Task<Result> DeleteColour(int Id)
+        public async Task<Result> DeleteColour(int id)
         {
-            return await _grapeRepository.DeleteColour(Id).ConfigureAwait(false);
+            return await _grapeRepository.DeleteColour(id).ConfigureAwait(false);
         }
         #endregion
     }

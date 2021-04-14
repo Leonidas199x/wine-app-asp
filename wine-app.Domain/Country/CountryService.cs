@@ -17,9 +17,9 @@ namespace wine_app.Domain.Country
             return await _countryRepository.GetAll().ConfigureAwait(false);
         }
 
-        public async Task<Result<Country>> Get(int Id)
+        public async Task<Result<Country>> Get(int id)
         {
-            return await _countryRepository.Get(Id).ConfigureAwait(false);
+            return await _countryRepository.Get(id).ConfigureAwait(false);
         }
 
         public async Task<Result> Save(Country country, SaveType saveType)
