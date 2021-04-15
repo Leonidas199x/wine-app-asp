@@ -46,9 +46,10 @@ namespace wine_app.Controllers
         [HttpGet]
         public async Task<IActionResult> InsertGrape()
         {
-            var viewModel = new EditableGrapeViewModel();
-
-            viewModel.GrapeColours = await GetGrapeColours().ConfigureAwait(false);
+            var viewModel = new EditableGrapeViewModel
+            {
+                GrapeColours = await GetGrapeColours().ConfigureAwait(false),
+            };
 
             return View(new Result<EditableGrapeViewModel>(viewModel));
         }
@@ -89,6 +90,30 @@ namespace wine_app.Controllers
             viewModel.GrapeColours = await GetGrapeColours().ConfigureAwait(false);
 
             return View(new Result<EditableGrapeViewModel>(viewModel, isSuccess));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditGrape(Result<EditableGrapeViewModel> model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(new Result<EditableGrapeViewModel>(model.Data));
+            }
+
+            var domainGrape = _grapeMapper.Map<Domain.Grape.Grape>(model.Data);
+
+            var saveResult = await _grapeService.SaveGrape(domainGrape, SaveType.Update).ConfigureAwait(false);
+            if (saveResult.IsSuccess)
+            {
+                return RedirectToAction("EditGrape", "Grape", new { id = model.Data.Id, IsSuccess = true });
+            }
+
+            var viewModel = new Result<EditableGrapeViewModel>
+                (saveResult.IsSuccess, saveResult.Error, model.Data);
+
+            viewModel.Data.GrapeColours = await GetGrapeColours().ConfigureAwait(false);
+
+            return View(viewModel);
         }
 
         [HttpDelete]
