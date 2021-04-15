@@ -8,6 +8,8 @@ namespace wine_app.Models.Country
 
         public string Name { get; set; }
 
+        public string IsoCode { get; set; }
+
         public string Note { get; set; }
 
         public DateTime DateCreated { get; set; }

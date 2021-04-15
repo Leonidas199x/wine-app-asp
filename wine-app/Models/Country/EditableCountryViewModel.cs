@@ -9,6 +9,8 @@ namespace wine_app.Models.Country
         [Display(Name="Country"), Required]
         public string Name { get; set; }
 
+        public string IsoCode { get; set; }
+
         public string Note { get; set; }
     }
 }
