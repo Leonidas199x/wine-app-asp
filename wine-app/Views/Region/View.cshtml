@@ -13,6 +13,28 @@
     <h4>Region</h4>
     <hr />
 
+    @if (!string.IsNullOrWhiteSpace(@Model.Error))
+    {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="alert alert-danger">
+                    <strong>@Model.Error</strong>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (@Model.IsSuccess)
+    {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="alert alert-success">
+                    <strong>Save successful</strong>
+                </div>
+            </div>
+        </div>
+    }
+
     <h6 class="col-md-10">Region Name:</h6>
     <p class="col-md-10">@Model.Data.Name</p>
 
@@ -31,6 +53,7 @@
     </div>
 
     <hr />
+
     <div>
         <a class="btn btn-primary" asp-controller="Region" asp-action="Edit" asp-route-id="@Model.Data.Id">Edit</a>
         <a class="btn btn-secondary" asp-controller="Region" asp-action="List">Back to list</a>
