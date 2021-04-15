@@ -2,7 +2,7 @@
 @{
     var model = Model.Data;
     @Html.HiddenFor(x => x.Data.Id);
-    var buttonText = Model.IsSuccess ? "Back to list" : "Cancel";
+    var buttonText = Model.IsSuccess ? "Back" : "Cancel";
 }
 
 @if (!string.IsNullOrWhiteSpace(@Model.Error))
