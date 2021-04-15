@@ -58,7 +58,10 @@ namespace wine_app.Controllers
                 return RedirectToAction("Edit", "Country", new { id = model.Data.Id , IsSuccess = true });
             }
 
-            return View();
+            var viewModel = new Result<EditableCountryViewModel>
+                (saveResult.IsSuccess, saveResult.Error, model.Data);
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -77,7 +80,9 @@ namespace wine_app.Controllers
 
             var domainCountry = _countryMapper.Map<Domain.Country.Country>(model.Data);
 
-            var saveResult = await _countryService.Save(domainCountry, SaveType.Insert).ConfigureAwait(false);
+            var saveResult = await _countryService
+                .Save(domainCountry, SaveType.Insert)
+                .ConfigureAwait(false);
             if(saveResult.IsSuccess)
             {
                 return RedirectToAction("List", "Country", string.Empty);
