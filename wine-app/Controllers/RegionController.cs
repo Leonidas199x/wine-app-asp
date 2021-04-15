@@ -63,11 +63,11 @@ namespace wine_app.Controllers
         public async Task<IActionResult> Edit(int id, bool isSuccess = false)
         {
             var domainRegion = await _regionService.GetRegion(id).ConfigureAwait(false);
-            var outboundCountry = _regionMapper.Map<EditableRegionViewModel>(domainRegion.Data);
+            var editableRegion = _regionMapper.Map<EditableRegionViewModel>(domainRegion.Data);
 
-            outboundCountry.Countries = await GetCountries().ConfigureAwait(false);
+            editableRegion.Countries = await GetCountries().ConfigureAwait(false);
 
-            return View(new Result<EditableRegionViewModel>(outboundCountry, isSuccess));
+            return View(new Result<EditableRegionViewModel>(editableRegion, isSuccess));
         }
 
         [HttpPost]
@@ -85,7 +85,7 @@ namespace wine_app.Controllers
                 .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
-                return RedirectToAction("Edit", "Region", new { id = model.Data.Id, IsSuccess = true });
+                return RedirectToAction("View", "Region", new { id = model.Data.Id, IsSuccess = true });
             }
 
             var viewModel = new Result<EditableRegionViewModel>
