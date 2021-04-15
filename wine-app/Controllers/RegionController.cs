@@ -65,6 +65,8 @@ namespace wine_app.Controllers
             var domainRegion = await _regionService.GetRegion(id).ConfigureAwait(false);
             var outboundCountry = _regionMapper.Map<EditableRegionViewModel>(domainRegion.Data);
 
+            outboundCountry.Countries = await GetCountries().ConfigureAwait(false);
+
             return View(new Result<EditableRegionViewModel>(outboundCountry, isSuccess));
         }
 
@@ -88,6 +90,8 @@ namespace wine_app.Controllers
 
             var viewModel = new Result<EditableRegionViewModel>
                (saveResult.IsSuccess, saveResult.Error, model.Data);
+
+            viewModel.Data.Countries = await GetCountries().ConfigureAwait(false);
 
             return View(viewModel);
         }
@@ -123,6 +127,8 @@ namespace wine_app.Controllers
 
             var viewModel = new Result<EditableRegionViewModel>
                 (saveResult.IsSuccess, saveResult.Error, model.Data);
+
+            viewModel.Data.Countries = await GetCountries().ConfigureAwait(false);
 
             return View(viewModel);
         }
