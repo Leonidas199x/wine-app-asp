@@ -17,7 +17,7 @@
 <div>
     @if (!hasErrors)
     {
-        <a class="btn btn-secondary" asp-controller="Grape" asp-action="InsertColour">Add new Grape Colour</a>
+        <a class="btn btn-primary" asp-controller="Grape" asp-action="InsertColour">Add new Grape Colour</a>
     }
     </div>
 <hr />
@@ -42,7 +42,7 @@
                         @colour.Colour
                     </td>
                     <td>
-                        <a class="btn btn-secondary" asp-controller="Grape" asp-action="EditColour" asp-route-id="@colour.Id">Edit</a>
+                        <a class="btn btn-primary" asp-controller="Grape" asp-action="EditColour" asp-route-id="@colour.Id">Edit</a>
                         <button class="btn btn-danger" id="deleteButton" onclick="deleteGrapeColour(@colour.Id, @Html.Raw("'"+colour.Colour+"'"))">Delete</button>
                     </td>
                 </tr>

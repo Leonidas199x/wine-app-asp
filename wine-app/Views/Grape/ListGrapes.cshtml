@@ -17,7 +17,7 @@
 <div>
     @if (!hasErrors)
     {
-        <a class="btn btn-secondary" asp-controller="Grape" asp-action="InsertGrape">Add New Grape</a>
+        <a class="btn btn-primary" asp-controller="Grape" asp-action="InsertGrape">Add New Grape</a>
     }
 </div>
 <hr />
@@ -60,7 +60,7 @@
                         @grape.DateCreated
                     </td>
                     <td>
-                        <a class="btn btn-secondary" asp-controller="Grape" asp-action="EditGrape" asp-route-id="@grape.Id">Edit</a>
+                        <a class="btn btn-primary" asp-controller="Grape" asp-action="EditGrape" asp-route-id="@grape.Id">Edit</a>
                         <button class="btn btn-danger" id="deleteButton" onclick="deleteGrape(@grape.Id, @Html.Raw("'"+grape.Name+"'"))">Delete</button>
                     </td>
                 </tr>
