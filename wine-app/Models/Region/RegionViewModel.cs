@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace wine_app.Models.Region
 {
@@ -6,9 +7,12 @@ namespace wine_app.Models.Region
     {
         public int Id { get; set; }
 
+        [Display(Name = "Region")]
         public string Name { get; set; }
 
         public int CountryId { get; set; }
+
+        public string Country { get; set; }
 
         public string Note { get; set; }
 

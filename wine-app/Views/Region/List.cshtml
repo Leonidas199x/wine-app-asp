@@ -1,0 +1,70 @@
+﻿@model wine_app.Domain.Result<IEnumerable<wine_app.Models.Region.RegionViewModel>>
+@{
+    ViewData["Title"] = "Regions";
+    var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
+}
+<script src="~/js/grape.js"></script>
+
+<h1>Regions</h1>
+@if (hasErrors)
+{
+    <div class="form-group">
+        <div class="alert alert-danger">
+            <strong>@Model.Error</strong>
+        </div>
+    </div>
+}
+<div>
+    @if (!hasErrors)
+    {
+        <a class="btn btn-primary" asp-controller="Region" asp-action="Insert">Add New Region</a>
+    }
+</div>
+<hr />
+<div class="row"></div>
+<div>
+    <table class="table" id="regionTable">
+        <thead>
+            <tr id="header">
+                <th>
+                    Name
+                </th>
+                <th>
+                    Country
+                </th>
+                <th>
+                    Note
+                </th>
+                <th>
+                    Date Created
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var region in Model.Data.OrderBy(x => x.Name).ThenBy(x => x.Country).ThenBy(x => x.Id))
+            {
+                <tr>
+                    <td>
+                        @region.Name
+                    </td>
+                    <td>
+                        @region.Country
+                    </td>
+                    <td>
+                        @region.Note
+                    </td>
+                    <td>
+                        @region.DateCreated
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="Region" asp-action="View" asp-route-id="@region.Id">View</a>
+                        <button class="btn btn-danger" id="deleteButton" onclick="deleteRegion(@region.Id, @Html.Raw("'"+region.Name+"'"))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

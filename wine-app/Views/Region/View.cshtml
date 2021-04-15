@@ -1,0 +1,44 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.Region.RegionViewModel>
+@{
+    var model = Model.Data;
+    ViewData["Title"] = "Region";
+}
+<head>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
+    <script src="~/js/map.js"></script>
+</head>
+
+<div class="form-horizontal">
+    <h4>Region</h4>
+    <hr />
+
+    <h6 class="col-md-10">Region Name:</h6>
+    <p class="col-md-10">@Model.Data.Name</p>
+
+    <h6 class="col-md-10">Country:</h6>
+    <p class="col-md-10">@Model.Data.Country</p>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Data.Note))
+    {
+        <h6 class="col-md-10">Note:</h6>
+        <p class="col-md-10">@Model.Data.Note</p>
+    }
+
+    <div class="col-md-10">
+        <h6>Location:</h6>
+        <div id="osm-map" />
+    </div>
+
+    <hr />
+    <div>
+        <a class="btn btn-primary" asp-controller="Region" asp-action="Edit" asp-route-id="@Model.Data.Id">Edit</a>
+        <a class="btn btn-secondary" asp-controller="Region" asp-action="List">Back to list</a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        getMap(@Html.Raw("'"+model.Longitude+"'"), @Html.Raw("'"+model.Latitude+"'"));
+    });
+</script>

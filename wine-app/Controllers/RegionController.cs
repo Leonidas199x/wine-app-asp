@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using wine_app.Domain;
+using wine_app.Domain.Country;
 using wine_app.Domain.Region;
 using wine_app.Models.Region;
 
@@ -12,11 +15,16 @@ namespace wine_app.Controllers
     public class RegionController : Controller
     {
         private readonly IRegionService _regionService;
+        private readonly ICountryService _countryService;
         private readonly IMapper _regionMapper;
 
-        public RegionController(IRegionService regionService, IMapper regionMapper)
+        public RegionController(
+            IRegionService regionService, 
+            IMapper regionMapper, 
+            ICountryService countryService)
         {
             _regionService = regionService;
+            _countryService = countryService;
             _regionMapper = regionMapper;
         }
 
@@ -25,16 +33,28 @@ namespace wine_app.Controllers
         {
             var domainRegions = await _regionService.GetRegions().ConfigureAwait(false);
             var domainViewModel = _regionMapper.Map<IEnumerable<RegionViewModel>>(domainRegions.Data);
+            var countries = await _countryService.GetAll().ConfigureAwait(false);
+
+            foreach (var region in domainViewModel)
+            {
+                region.Country = countries
+                    .Data
+                    .Where(x => x.Id == region.CountryId).FirstOrDefault().Name;
+            }
+
             var viewModel = new Result<IEnumerable<RegionViewModel>>(domainViewModel);
 
             return View(viewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewRegion(int id, bool isSuccess = false)
+        public async Task<IActionResult> View(int id, bool isSuccess = false)
         {
             var domainRegion = await _regionService.GetRegion(id).ConfigureAwait(false);
             var viewModel = _regionMapper.Map<RegionViewModel>(domainRegion.Data);
+            var countries = await _countryService.GetAll().ConfigureAwait(false);
+
+            viewModel.Country = countries.Data.Where(x => x.Id == id).FirstOrDefault().Name;
 
             return View(new Result<RegionViewModel>(viewModel, isSuccess));
         }
@@ -58,19 +78,29 @@ namespace wine_app.Controllers
 
             var domainRegion = _regionMapper.Map<Region>(model.Data);
 
-            var saveResult = await _regionService.Save(domainRegion, SaveType.Update).ConfigureAwait(false);
+            var saveResult = await _regionService
+                .Save(domainRegion, SaveType.Update)
+                .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
                 return RedirectToAction("Edit", "Region", new { id = model.Data.Id, IsSuccess = true });
             }
 
-            return View();
+            var viewModel = new Result<EditableRegionViewModel>
+               (saveResult.IsSuccess, saveResult.Error, model.Data);
+
+            return View(viewModel);
         }
 
         [HttpGet]
-        public IActionResult Insert()
+        public async Task<IActionResult> Insert()
         {
-            return View(new Result<EditableRegionViewModel>());
+            var viewModel = new EditableRegionViewModel
+            {
+                Countries = await GetCountries().ConfigureAwait(false)
+            };
+
+            return View(new Result<EditableRegionViewModel>(viewModel));
         }
 
         [HttpPost]
@@ -83,7 +113,9 @@ namespace wine_app.Controllers
 
             var domainCountry = _regionMapper.Map<Region>(model.Data);
 
-            var saveResult = await _regionService.Save(domainCountry, SaveType.Insert).ConfigureAwait(false);
+            var saveResult = await _regionService
+                .Save(domainCountry, SaveType.Insert)
+                .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
                 return RedirectToAction("List", "Region", string.Empty);
@@ -115,6 +147,30 @@ namespace wine_app.Controllers
                 default:
                     return BadRequest();
             }
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetCountries()
+        {
+            var countriesResult = await _countryService.GetAll().ConfigureAwait(false);
+            var countries = countriesResult.Data;
+
+            var selectList = new List<SelectListItem>()
+            {
+                new SelectListItem(),
+            };
+
+            foreach (var country in countries)
+            {
+                var listItem = new SelectListItem
+                {
+                    Value = country.Id.ToString(),
+                    Text = country.Name,
+                };
+
+                selectList.Add(listItem);
+            }
+
+            return selectList;
         }
     }
 }

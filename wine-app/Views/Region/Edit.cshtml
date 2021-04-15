@@ -1,0 +1,14 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.Region.EditableRegionViewModel>
+@{
+    ViewData["Title"] = "Edit Region";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Edit Region</h4>
+        <hr />
+        <partial name="_region" />
+    </div>
+}

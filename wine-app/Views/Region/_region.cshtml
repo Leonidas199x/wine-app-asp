@@ -1,0 +1,75 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.Region.EditableRegionViewModel>
+@{
+    var model = Model.Data;
+    @Html.HiddenFor(x => x.Data.Id);
+    var buttonText = Model.IsSuccess ? "Back to list" : "Cancel";
+}
+
+@if (!string.IsNullOrWhiteSpace(@Model.Error))
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-danger">
+                <strong>@Model.Error</strong>
+            </div>
+        </div>
+    </div>
+}
+
+@if (@Model.IsSuccess)
+{
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="alert alert-success">
+                <strong>Save successful</strong>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="form-group">
+    <label asp-for="@Model.Data.Name" class="col-md-10"></label>
+    <div class="col-md-10">
+        <input asp-for="@Model.Data.Name" class="form-control" />
+        <span asp-validation-for="@Model.Data.Name" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="@Model.Data.Countries" class="control-label col-md-2"></label>
+    <div class="col-md-10">
+        <select asp-for="@Model.Data.CountryId" asp-items="@Model.Data.Countries" class="form-control"></select>
+        <span asp-validation-for="@Model.Data.Countries" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="@Model.Data.Longitude" class="col-md-10"></label>
+    <div class="col-md-10">
+        <input asp-for="@Model.Data.Longitude" class="form-control" />
+        <span asp-validation-for="@Model.Data.Longitude" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="@Model.Data.Latitude" class="col-md-10"></label>
+    <div class="col-md-10">
+        <input asp-for="@Model.Data.Latitude" class="form-control" />
+        <span asp-validation-for="@Model.Data.Latitude" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="@Model.Data.Note" class="col-md-10"></label>
+    <div class="col-md-10">
+        <textarea asp-for="@Model.Data.Note" class="form-control"></textarea>
+        <span asp-validation-for="@Model.Data.Note" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Save" class="btn btn-success" />
+        <a class="btn btn-secondary" asp-controller="Region" asp-action="View" asp-route-id="@Model.Data.Id">@buttonText</a>
+    </div>
+</div>
