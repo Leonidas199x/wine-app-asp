@@ -34,6 +34,15 @@ namespace wine_app.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> View(int id, bool isSuccess = false)
+        {
+            var domainCountry = await _countryService.Get(id).ConfigureAwait(false);
+            var viewModel = _countryMapper.Map<CountryViewModel>(domainCountry.Data);
+
+            return View(new Result<CountryViewModel>(viewModel, isSuccess));
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Edit(int id, bool isSuccess = false)
         {
             var domainCountry = await _countryService.Get(id).ConfigureAwait(false);
@@ -55,7 +64,7 @@ namespace wine_app.Controllers
             var saveResult = await _countryService.Save(domainCountry, SaveType.Update).ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
-                return RedirectToAction("Edit", "Country", new { id = model.Data.Id , IsSuccess = true });
+                return RedirectToAction("View", "Country", new { id = model.Data.Id , IsSuccess = true });
             }
 
             var viewModel = new Result<EditableCountryViewModel>

@@ -1,0 +1,68 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.Country.CountryViewModel>
+@{
+    var model = Model.Data;
+    ViewData["Title"] = "Country";
+    var isoCode = Model.Data.IsoCode;
+}
+<head>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/map.js"></script>
+    <script src="~/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="~/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+</head>
+
+<div class="form-horizontal">
+    <h4>Country</h4>
+    <hr />
+
+    @if (@Model.IsSuccess)
+    {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="alert alert-success">
+                    <strong>Save successful</strong>
+                </div>
+            </div>
+        </div>
+    }
+
+    <h6 class="col-md-10">Country:</h6>
+    <p class="col-md-10">@Model.Data.Name</p>
+    <h6 class="col-md-10">ISO Code:</h6>
+    <p class="col-md-10">@Model.Data.IsoCode</p>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Data.Note))
+    {
+        <h6 class="col-md-10">Note:</h6>
+        <p class="col-md-10">@Model.Data.Note</p>
+    }
+    <hr />
+
+    <div id="vmap" style="width: 600px; height: 400px;"></div>
+
+    <div>
+        <a class="btn btn-primary" asp-controller="Country" asp-action="Edit" asp-route-id="@Model.Data.Id">Edit</a>
+        <a class="btn btn-secondary" asp-controller="Country" asp-action="List">Back to list</a>
+    </div>
+</div>
+
+<script>
+    jQuery('#vmap').vectorMap({
+        map: 'world_en',
+        backgroundColor: null,
+        color: '#818181',
+        selectedColor: '#fa8e00',
+        selectedRegions: [@Html.Raw("'"+isoCode+"'")],
+        hoverColor: null,
+        enableZoom: true,
+        showTooltip: false,
+        onRegionOver: function (event, code, region) {
+            event.preventDefault();
+        },
+        onRegionClick: function (event, code, region) {
+            return false;
+        }
+    });
+</script>

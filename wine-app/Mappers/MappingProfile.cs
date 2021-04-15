@@ -9,6 +9,7 @@ namespace wine_app.Mappers
             #region country
             CreateMap<Domain.Country.Country, Models.Country.Country>().ReverseMap();
             CreateMap<Domain.Country.Country, Models.Country.EditableCountryViewModel>().ReverseMap();
+            CreateMap<Models.Country.CountryViewModel, Domain.Country.Country>().ReverseMap();
             #endregion
 
             #region grape

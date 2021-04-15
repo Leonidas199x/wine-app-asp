@@ -30,7 +30,7 @@
                     Name
                 </th>
                 <th>
-                    Note
+                    ISO Code
                 </th>
                 <th>
                     Created
@@ -48,13 +48,13 @@
                         @country.Name
                     </td>
                     <td>
-                        @country.Note
+                        @country.IsoCode
                     </td>
                     <td>
                         @country.DateCreated
                     </td>
                     <td>
-                        <a class="btn btn-primary" asp-controller="Country" asp-action="Edit" asp-route-id="@country.Id">Edit</a>
+                        <a class="btn btn-primary" asp-controller="Country" asp-action="View" asp-route-id="@country.Id">View</a>
                         <button class="btn btn-danger" id="deleteButton" onclick="deleteCountry(@country.Id, @Html.Raw("'"+@country.Name+"'"))">Delete</button>
                     </td>
                 </tr>

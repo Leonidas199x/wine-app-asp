@@ -36,6 +36,14 @@
 </div>
 
 <div class="form-group">
+    <label asp-for="@Model.Data.IsoCode" class="col-md-10"></label>
+    <div class="col-md-10">
+        <input asp-for="@Model.Data.IsoCode" class="form-control" />
+        <span asp-validation-for="@Model.Data.IsoCode" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group">
     <label asp-for="@Model.Data.Note" class="col-md-10"></label>
     <div class="col-md-10">
         <textarea asp-for="@Model.Data.Note" class="form-control"></textarea>
@@ -46,6 +54,6 @@
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
         <input type="submit" value="Save" class="btn btn-success" />
-        <a class="btn btn-secondary" asp-controller="Country" asp-action="List">@buttonText</a>
+        <a class="btn btn-secondary" asp-controller="Country" asp-action="View" asp-route-id="@Model.Data.Id">@buttonText</a>
     </div>
 </div>
