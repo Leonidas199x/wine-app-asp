@@ -13,17 +13,6 @@
     <h4>Region</h4>
     <hr />
 
-    @if (!string.IsNullOrWhiteSpace(@Model.Error))
-    {
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <div class="alert alert-danger">
-                    <strong>@Model.Error</strong>
-                </div>
-            </div>
-        </div>
-    }
-
     @if (@Model.IsSuccess)
     {
         <div class="form-group">
