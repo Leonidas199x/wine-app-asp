@@ -54,6 +54,14 @@
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
         <input type="submit" value="Save" class="btn btn-success" />
-        <a class="btn btn-secondary" asp-controller="Country" asp-action="View" asp-route-id="@Model.Data.Id">@buttonText</a>
+        @if (@Model.Data?.Id == null)
+        {
+            <a class="btn btn-secondary" asp-controller="Country" asp-action="List">@buttonText</a>
+        }
+        else
+        {
+            <a class="btn btn-secondary" asp-controller="Country" asp-action="View" asp-route-id="@Model.Data.Id">@buttonText</a>
+        }
+
     </div>
 </div>
