@@ -54,7 +54,7 @@
         var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        center: [5, 46],
+            center: [@Model.Data.Coordinates.First(), @Model.Data.Coordinates.Skip(1).First()],
         zoom: 3
     });
 

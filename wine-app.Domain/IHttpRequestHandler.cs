@@ -5,7 +5,7 @@ namespace wine_app.Domain
 {
     public interface IHttpRequestHandler
     {
-        Task<Result<T>> SendAsync<T>(HttpRequestMessage request);
+        Task<Result<T>> SendAsync<T>(HttpRequestMessage request, string api= ApiNames.WineApi);
 
         Task<Result> PostAsync(string url, StringContent body);
 

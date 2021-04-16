@@ -7,6 +7,7 @@ using System;
 using wine_app.Domain;
 using wine_app.Domain.Country;
 using wine_app.Domain.Grape;
+using wine_app.Domain.MapBox;
 using wine_app.Domain.Region;
 using wine_app.Mappers;
 using wine_app.Models;
@@ -33,6 +34,11 @@ namespace wine_app
             services.AddTransient<IRegionService, RegionService>();
             services.AddTransient<IRegionRepository, RegionRepository>();
             services.AddTransient<IHttpRequestHandler, HttpRequestHandler>();
+            services.AddTransient<IMapBoxService, MapBoxService>();
+            services.AddTransient<IMapBoxRepository>(x => 
+            new MapBoxRepository(
+                x.GetRequiredService<IHttpRequestHandler>(), 
+                Configuration.GetSection("MapBoxApiKey").Value));
 
             //Register automapper
             services.AddAutoMapper(typeof(MappingProfile));
@@ -40,6 +46,11 @@ namespace wine_app
             services.AddHttpClient(ApiNames.WineApi, c =>
             {
                 c.BaseAddress = new Uri(Configuration.GetSection("WineApiBaseAddress").Value);
+            });
+
+            services.AddHttpClient(ApiNames.MapBoxApi, c =>
+            {
+                c.BaseAddress = new Uri(Configuration.GetSection("MapBoxApi").Value);
             });
         }
 

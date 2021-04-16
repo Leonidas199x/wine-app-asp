@@ -14,9 +14,9 @@ namespace wine_app.Domain
             _httpClient = httpClient;
         }
 
-        public async Task<Result<T>> SendAsync<T>(HttpRequestMessage request)
+        public async Task<Result<T>> SendAsync<T>(HttpRequestMessage request, string api = ApiNames.WineApi)
         {
-            var client = _httpClient.CreateClient(ApiNames.WineApi);
+            var client = _httpClient.CreateClient(api);
             var response = await client.SendAsync(request).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {

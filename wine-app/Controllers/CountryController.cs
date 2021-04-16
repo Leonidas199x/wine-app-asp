@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using wine_app.Models.Country;
 using wine_app.Domain;
 using System.Net;
+using wine_app.Domain.MapBox;
+using System.Linq;
 
 namespace wine_app.Controllers
 {
@@ -13,19 +15,31 @@ namespace wine_app.Controllers
     {
         private readonly ICountryService _countryService;
         private readonly IMapper _countryMapper;
+        private readonly IMapBoxService _mapBoxService;
 
-        public CountryController(ICountryService countryService, IMapper countryMapper)
+        public CountryController(
+            ICountryService countryService, 
+            IMapper countryMapper, 
+            IMapBoxService mapBoxService)
         {
             _countryService = countryService;
             _countryMapper = countryMapper;
+            _mapBoxService = mapBoxService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(string searchString)
         {
             var countriesResult = await _countryService.GetAll().ConfigureAwait(false);
             var outboundCountries = _countryMapper
                 .Map<IEnumerable<Models.Country.Country>>(countriesResult.Data);
+
+            if(!string.IsNullOrWhiteSpace(searchString))
+            {
+                outboundCountries = outboundCountries.Where(x => x.Name.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
 
             var viewModel = new Result<IEnumerable<Models.Country.Country>>
                 (countriesResult.IsSuccess, countriesResult.Error, outboundCountries);
@@ -38,6 +52,10 @@ namespace wine_app.Controllers
         {
             var domainCountry = await _countryService.Get(id).ConfigureAwait(false);
             var viewModel = _countryMapper.Map<CountryViewModel>(domainCountry.Data);
+            var mapBoxData = await _mapBoxService
+                .GetGeoInfo(domainCountry.Data.Name)
+                .ConfigureAwait(false);
+            viewModel.Coordinates = mapBoxData.Data.Features.FirstOrDefault().Center;
 
             return View(new Result<CountryViewModel>(viewModel, isSuccess));
         }

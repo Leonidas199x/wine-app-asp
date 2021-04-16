@@ -21,6 +21,15 @@
     }
 </div>
 <hr />
+<form asp-action="List" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Filter by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a class="btn btn-default" asp-controller="Country" asp-action="List">Clear</a>
+        </p>
+    </div>
+</form>
 <div class="row"></div>
 <div>
     <table class="table" id="countriesTable">

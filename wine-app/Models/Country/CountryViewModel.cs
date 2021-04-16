@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace wine_app.Models.Country
 {
@@ -13,5 +14,7 @@ namespace wine_app.Models.Country
         public string IsoCode { get; set; }
 
         public string Note { get; set; }
+
+        public IEnumerable<string> Coordinates { get; set; }
     }
 }
