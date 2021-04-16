@@ -1,4 +1,4 @@
-﻿function renderMap(accessToken, longitude, latitude, zoom, isoCode) {
+﻿function renderMap(accessToken, longitude, latitude, zoom, isoCode, mapId, url, type) {
     mapboxgl.accessToken = accessToken;
 
     var map = new mapboxgl.Map({
@@ -9,12 +9,11 @@
     });
 
     map.on('load', function () {
-    map.addLayer(
-        {
-            id: 'country-boundaries',
+        map.addLayer({
+            id: mapId,
             source: {
                 type: 'vector',
-                url: 'mapbox://mapbox.country-boundaries-v1',
+                url: 'mapbox://' + url,
             },
             'source-layer': 'country_boundaries',
             type: 'fill',
@@ -23,13 +22,21 @@
                 'fill-opacity': 0.4,
             },
         },
-        'country-label'
-    );
+            'country-label'
+        );
 
-    map.setFilter('country-boundaries', [
-        "in",
-        "iso_3166_1",
-        isoCode
-        ]);
+        if (type === "country") {
+            map.setFilter('country-boundaries', [
+                "in",
+                "iso_3166_1",
+                isoCode
+            ]);
+        } else {
+            map.setFilter('country-boundaries', [
+                "in",
+                "iso_3166_2",
+                isoCode
+            ]);
+        }
     });
 };
