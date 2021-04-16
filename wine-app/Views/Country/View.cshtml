@@ -55,6 +55,9 @@
         @Model.Data.Coordinates.First(),
         @Model.Data.Coordinates.Skip(1).First(),
         3,
-        @Html.Raw("'"+isoCode+"'")
+        @Html.Raw("'"+isoCode+"'"),
+        'country-boundaries',
+        'mapbox.country-boundaries-v1',
+        "country"
     );
 </script>
