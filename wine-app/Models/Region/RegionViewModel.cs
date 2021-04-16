@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace wine_app.Models.Region
@@ -9,6 +10,8 @@ namespace wine_app.Models.Region
 
         [Display(Name = "Region")]
         public string Name { get; set; }
+
+        public string IsoCode { get; set; }
 
         public int CountryId { get; set; }
 
@@ -23,5 +26,7 @@ namespace wine_app.Models.Region
         public DateTime DateCreated { get; set; }
 
         public DateTime DateUpdated { get; set; }
+
+        public IEnumerable<string> Coordinates { get; set; }
     }
 }
