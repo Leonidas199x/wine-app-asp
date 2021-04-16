@@ -1,16 +1,15 @@
-﻿@model wine_app.Domain.Result<wine_app.Models.Country.CountryViewModel>
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model wine_app.Domain.Result<wine_app.Models.Country.CountryViewModel>
 @{
     var model = Model.Data;
     ViewData["Title"] = "Country";
     var isoCode = Model.Data.IsoCode;
 }
 <head>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-    <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/js/map.js"></script>
-    <script src="~/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="~/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 
 <div class="form-horizontal">
@@ -38,9 +37,10 @@
         <h6 class="col-md-10">Note:</h6>
         <p class="col-md-10">@Model.Data.Note</p>
     }
-    <hr />
 
-    <div id="vmap" style="width: 600px; height: 400px;"></div>
+    <h6 class="col-md-10">Location:</h6>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+    <hr />
 
     <div>
         <a class="btn btn-primary" asp-controller="Country" asp-action="Edit" asp-route-id="@Model.Data.Id">Edit</a>
@@ -49,20 +49,37 @@
 </div>
 
 <script>
-    jQuery('#vmap').vectorMap({
-        map: 'world_en',
-        backgroundColor: null,
-        color: '#818181',
-        selectedColor: '#fa8e00',
-        selectedRegions: [@Html.Raw("'"+isoCode+"'")],
-        hoverColor: null,
-        enableZoom: true,
-        showTooltip: false,
-        onRegionOver: function (event, code, region) {
-            event.preventDefault();
-        },
-        onRegionClick: function (event, code, region) {
-            return false;
-        }
+        mapboxgl.accessToken = @Html.Raw("'" + Configuration.GetSection("MapBoxApiKey").Value + "'");
+
+        var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [5, 46],
+        zoom: 3
+    });
+
+    map.on('load', function () {
+        map.addLayer(
+            {
+        id: 'country-boundaries',
+                source: {
+            type: 'vector',
+                    url: 'mapbox://mapbox.country-boundaries-v1',
+                },
+                'source-layer': 'country_boundaries',
+                type: 'fill',
+                paint: {
+                'fill-color': '#d2361e',
+                    'fill-opacity': 0.4,
+                },
+            },
+            'country-label'
+        );
+
+        map.setFilter('country-boundaries', [
+            "in",
+            "iso_3166_1",
+            @Html.Raw("'"+isoCode+"'")
+        ]);
     });
 </script>
