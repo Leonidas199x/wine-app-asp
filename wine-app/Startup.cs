@@ -9,6 +9,7 @@ using wine_app.Domain.Country;
 using wine_app.Domain.Grape;
 using wine_app.Domain.Region;
 using wine_app.Mappers;
+using wine_app.Models;
 
 namespace wine_app
 {
