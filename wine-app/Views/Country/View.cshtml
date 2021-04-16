@@ -10,6 +10,7 @@
 <head>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="~/js/map-box.js"></script>
 </head>
 
 <div class="form-horizontal">
@@ -49,37 +50,11 @@
 </div>
 
 <script>
-        mapboxgl.accessToken = @Html.Raw("'" + Configuration.GetSection("MapBoxApiKey").Value + "'");
-
-        var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-            center: [@Model.Data.Coordinates.First(), @Model.Data.Coordinates.Skip(1).First()],
-        zoom: 3
-    });
-
-    map.on('load', function () {
-        map.addLayer(
-            {
-        id: 'country-boundaries',
-                source: {
-            type: 'vector',
-                    url: 'mapbox://mapbox.country-boundaries-v1',
-                },
-                'source-layer': 'country_boundaries',
-                type: 'fill',
-                paint: {
-                'fill-color': '#d2361e',
-                    'fill-opacity': 0.4,
-                },
-            },
-            'country-label'
-        );
-
-        map.setFilter('country-boundaries', [
-            "in",
-            "iso_3166_1",
-            @Html.Raw("'"+isoCode+"'")
-        ]);
-    });
+    renderMap(
+        @Html.Raw("'" + Configuration.GetSection("MapBoxApiKey").Value + "'"),
+        @Model.Data.Coordinates.First(),
+        @Model.Data.Coordinates.Skip(1).First(),
+        3,
+        @Html.Raw("'"+isoCode+"'")
+    );
 </script>
