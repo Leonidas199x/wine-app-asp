@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>wine_app</RootNamespace>
+    <UserSecretsId>0407bdc7-4156-435e-a1ab-75bda02a337d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
