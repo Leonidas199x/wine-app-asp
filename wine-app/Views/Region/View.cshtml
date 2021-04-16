@@ -1,12 +1,16 @@
-﻿@model wine_app.Domain.Result<wine_app.Models.Region.RegionViewModel>
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@model wine_app.Domain.Result<wine_app.Models.Region.RegionViewModel>
 @{
     var model = Model.Data;
     ViewData["Title"] = "Region";
+    var isoCode = Model.Data.IsoCode;
 }
 <head>
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-    <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
-    <script src="~/js/map.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="~/js/map-box.js"></script>
 </head>
 
 <div class="form-horizontal">
@@ -36,11 +40,8 @@
         <p class="col-md-10">@Model.Data.Note</p>
     }
 
-    <div class="col-md-10">
-        <h6>Location:</h6>
-        <div id="osm-map" />
-    </div>
-
+    <h6 class="col-md-10">Location:</h6>
+    <div id="map" style="width: 100%; height: 400px;"></div>
     <hr />
 
     <div>
@@ -50,7 +51,15 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        getMap(@Html.Raw("'"+model.Longitude+"'"), @Html.Raw("'"+model.Latitude+"'"));
-    });
+     renderMap(
+        @Html.Raw("'" + Configuration.GetSection("MapBoxApiKey").Value + "'"),
+        @Model.Data.Coordinates.First(),
+        @Model.Data.Coordinates.Skip(1).First(),
+        4,
+        @*@Html.Raw("'"+isoCode+"'"),*@
+         'FR-94',
+        'region-boundaries',
+        'mapbox.mapbox-streets-v8',
+        "region"
+    );
 </script>
