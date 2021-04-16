@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using wine_app.Domain;
 using wine_app.Domain.Country;
+using wine_app.Domain.MapBox;
 using wine_app.Domain.Region;
 using wine_app.Models.Region;
 
@@ -17,15 +18,18 @@ namespace wine_app.Controllers
         private readonly IRegionService _regionService;
         private readonly ICountryService _countryService;
         private readonly IMapper _regionMapper;
+        private readonly IMapBoxService _mapBoxService;
 
         public RegionController(
             IRegionService regionService, 
             IMapper regionMapper, 
-            ICountryService countryService)
+            ICountryService countryService,
+            IMapBoxService mapBoxService)
         {
             _regionService = regionService;
             _countryService = countryService;
             _regionMapper = regionMapper;
+            _mapBoxService = mapBoxService;
         }
 
         [HttpGet]
@@ -54,7 +58,16 @@ namespace wine_app.Controllers
             var viewModel = _regionMapper.Map<RegionViewModel>(domainRegion.Data);
             var countries = await _countryService.GetAll().ConfigureAwait(false);
 
-            viewModel.Country = countries.Data.Where(x => x.Id == id).FirstOrDefault().Name;
+            viewModel.Country = countries.Data
+                .Where(x => x.Id == domainRegion.Data.CountryId)
+                .FirstOrDefault()
+                .Name;
+
+            var mapBoxData = await _mapBoxService
+                .GetGeoInfo(domainRegion.Data.Name)
+                .ConfigureAwait(false);
+
+            viewModel.Coordinates = mapBoxData.Data.Features.FirstOrDefault().Center;
 
             return View(new Result<RegionViewModel>(viewModel, isSuccess));
         }
