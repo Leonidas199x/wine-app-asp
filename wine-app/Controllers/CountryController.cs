@@ -28,20 +28,26 @@ namespace wine_app.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List(string searchString)
+        public async Task<IActionResult> List(
+            string searchString, 
+            int currentPage = 1, 
+            int pageSize= 10)
         {
-            var countriesResult = await _countryService.GetAll().ConfigureAwait(false);
+            var countriesResult = await _countryService.GetAll(currentPage, pageSize)
+                .ConfigureAwait(false);
+
             var outboundCountries = _countryMapper
-                .Map<IEnumerable<Models.Country.Country>>(countriesResult.Data);
+                .Map<Models.PagedList<IEnumerable<Models.Country.Country>>>(countriesResult.Data);
 
             if(!string.IsNullOrWhiteSpace(searchString))
             {
-                outboundCountries = outboundCountries.Where(x => x.Name.Contains(searchString));
+                outboundCountries.Data = outboundCountries.Data
+                    .Where(x => x.Name.Contains(searchString));
             }
 
             ViewData["CurrentFilter"] = searchString;
 
-            var viewModel = new Result<IEnumerable<Models.Country.Country>>
+            var viewModel = new Result<Models.PagedList<IEnumerable<Models.Country.Country>>>
                 (countriesResult.IsSuccess, countriesResult.Error, outboundCountries);
 
             return View(viewModel);

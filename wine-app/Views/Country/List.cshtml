@@ -1,7 +1,8 @@
-﻿@model wine_app.Domain.Result<IEnumerable<wine_app.Models.Country.Country>>
+﻿@model wine_app.Domain.Result<wine_app.Models.PagedList<IEnumerable<wine_app.Models.Country.Country>>>
 @{
     ViewData["Title"] = "Countries";
     var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
+    var countries = Model.Data.Data;
 }
 <script src="~/js/country.js"></script>
 
@@ -50,7 +51,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var country in Model.Data.OrderBy(x => x.Name).ThenBy(x => x.Id))
+            @foreach (var country in countries.OrderBy(x => x.Name).ThenBy(x => x.Id))
             {
                 <tr>
                     <td>
@@ -70,4 +71,14 @@
             }
         </tbody>
     </table>
+    <div>
+        <ul class="pagination">
+            @for (var i = 1; i <= Model.Data.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Data.Page ? "active" : "")">
+                    <a asp-page="/pagination" asp-route-currentpage="@i" class="page-link">@i</a>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
