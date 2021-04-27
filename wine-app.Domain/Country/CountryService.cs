@@ -12,9 +12,9 @@ namespace wine_app.Domain.Country
             _countryRepository = countryRepository;
         }
 
-        public async Task<Result<IEnumerable<Country>>> GetAll()
+        public async Task<Result<PagedList<IEnumerable<Country>>>> GetAll(int page, int pageSize)
         {
-            return await _countryRepository.GetAll().ConfigureAwait(false);
+            return await _countryRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<Result<Country>> Get(int id)

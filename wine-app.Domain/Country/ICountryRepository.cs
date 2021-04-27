@@ -5,7 +5,7 @@ namespace wine_app.Domain.Country
 {
     public interface ICountryRepository
     {
-        Task<Result<IEnumerable<Country>>> GetAll();
+        Task<Result<PagedList<IEnumerable<Country>>>> GetAll(int page, int pageSize);
 
         Task<Result<Country>> Get(int id);
 

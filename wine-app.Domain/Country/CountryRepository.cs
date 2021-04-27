@@ -17,10 +17,10 @@ namespace wine_app.Domain.Country
             _httpRequestHandler = httpRequestHandler;
         }
 
-        public async Task<Result<IEnumerable<Country>>> GetAll()
+        public async Task<Result<PagedList<IEnumerable<Country>>>> GetAll(int page, int pageSize)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}");
-            return await _httpRequestHandler.SendAsync<IEnumerable<Country>>(request).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}?page={page}&pageSize={pageSize}");
+            return await _httpRequestHandler.SendAsync<PagedList<IEnumerable<Country>>>(request).ConfigureAwait(false);
         }
 
         public async Task<Result<Country>> Get(int id)
