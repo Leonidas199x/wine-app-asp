@@ -6,6 +6,10 @@ namespace wine_app.Mappers
     {
         public MappingProfile()
         {
+            #region Domain
+            CreateMap(typeof(Models.PagedList<>), typeof(Domain.PagedList<>)).ReverseMap();
+            #endregion
+
             #region country
             CreateMap<Domain.Country.Country, Models.Country.Country>().ReverseMap();
             CreateMap<Domain.Country.Country, Models.Country.EditableCountryViewModel>().ReverseMap();
