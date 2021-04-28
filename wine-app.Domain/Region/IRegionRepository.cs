@@ -5,7 +5,7 @@ namespace wine_app.Domain.Region
 {
     public interface IRegionRepository
     {
-        Task<Result<IEnumerable<Region>>> GetRegions();
+        Task<Result<PagedList<IEnumerable<Region>>>> GetRegions(int page, int pageSize);
 
         Task<Result<Region>> GetRegion(int id);
 

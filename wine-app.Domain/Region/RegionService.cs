@@ -12,9 +12,9 @@ namespace wine_app.Domain.Region
             _regionRepository = regionRepository;
         }
 
-        public async Task<Result<IEnumerable<Region>>> GetRegions()
+        public async Task<Result<PagedList<IEnumerable<Region>>>> GetRegions(int page, int pageSize)
         {
-            return await _regionRepository.GetRegions().ConfigureAwait(false);
+            return await _regionRepository.GetRegions(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task<Result<Region>> GetRegion(int id)

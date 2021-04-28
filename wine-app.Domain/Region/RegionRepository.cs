@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace wine_app.Domain.Region
 {
-    public class RegionRepository :IRegionRepository
+    public class RegionRepository : IRegionRepository
     {
         private readonly string _controllerUrl = "region";
 
@@ -19,10 +19,10 @@ namespace wine_app.Domain.Region
             _httpRequestHandler = httpRequestHandler;
         }
 
-        public async Task<Result<IEnumerable<Region>>> GetRegions()
+        public async Task<Result<PagedList<IEnumerable<Region>>>> GetRegions(int page, int pageSize)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}");
-            return await _httpRequestHandler.SendAsync<IEnumerable<Region>>(request).ConfigureAwait(false);
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}?page={page}&pageSize={pageSize}");
+            return await _httpRequestHandler.SendAsync<PagedList<IEnumerable<Region>>>(request).ConfigureAwait(false);
         }
 
         public async Task<Result<Region>> GetRegion(int id)

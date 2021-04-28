@@ -1,4 +1,4 @@
-﻿@model wine_app.Domain.Result<IEnumerable<wine_app.Models.Region.RegionViewModel>>
+﻿@model wine_app.Domain.Result<wine_app.Models.PagedList<IEnumerable<wine_app.Models.Region.RegionViewModel>>>
 @{
     ViewData["Title"] = "Regions";
     var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);

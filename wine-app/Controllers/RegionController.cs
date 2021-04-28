@@ -33,20 +33,20 @@ namespace wine_app.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(int currentPage = 1, int pageSize = 10)
         {
-            var domainRegions = await _regionService.GetRegions().ConfigureAwait(false);
-            var domainViewModel = _regionMapper.Map<IEnumerable<RegionViewModel>>(domainRegions.Data);
+            var domainRegions = await _regionService.GetRegions(currentPage, pageSize).ConfigureAwait(false);
+            var domainViewModel = _regionMapper.Map<Models.PagedList<IEnumerable<RegionViewModel>>>(domainRegions.Data);
             var countries = await _countryService.GetLookup().ConfigureAwait(false);
 
-            foreach (var region in domainViewModel)
+            foreach (var region in domainViewModel.Data)
             {
                 region.Country = countries
                     .Data
                     .Where(x => x.Id == region.CountryId).FirstOrDefault().Name;
             }
 
-            var viewModel = new Result<IEnumerable<RegionViewModel>>(domainViewModel);
+            var viewModel = new Result<Models.PagedList<IEnumerable<RegionViewModel>>>(domainViewModel);
 
             return View(viewModel);
         }
