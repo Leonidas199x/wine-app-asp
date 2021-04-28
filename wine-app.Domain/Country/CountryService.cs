@@ -17,6 +17,11 @@ namespace wine_app.Domain.Country
             return await _countryRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
+        public async Task<Result<IEnumerable<Country>>> GetLookup()
+        {
+            return await _countryRepository.GetLookup().ConfigureAwait(false);
+        }
+
         public async Task<Result<Country>> Get(int id)
         {
             return await _countryRepository.Get(id).ConfigureAwait(false);

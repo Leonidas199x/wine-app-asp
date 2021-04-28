@@ -23,6 +23,12 @@ namespace wine_app.Domain.Country
             return await _httpRequestHandler.SendAsync<PagedList<IEnumerable<Country>>>(request).ConfigureAwait(false);
         }
 
+        public async Task<Result<IEnumerable<Country>>> GetLookup()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/lookup");
+            return await _httpRequestHandler.SendAsync<IEnumerable<Country>>(request).ConfigureAwait(false);
+        }
+
         public async Task<Result<Country>> Get(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/{id}");

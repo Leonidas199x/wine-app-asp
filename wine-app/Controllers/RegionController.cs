@@ -37,7 +37,7 @@ namespace wine_app.Controllers
         {
             var domainRegions = await _regionService.GetRegions().ConfigureAwait(false);
             var domainViewModel = _regionMapper.Map<IEnumerable<RegionViewModel>>(domainRegions.Data);
-            var countries = await _countryService.GetAll().ConfigureAwait(false);
+            var countries = await _countryService.GetLookup().ConfigureAwait(false);
 
             foreach (var region in domainViewModel)
             {
@@ -56,9 +56,10 @@ namespace wine_app.Controllers
         {
             var domainRegion = await _regionService.GetRegion(id).ConfigureAwait(false);
             var viewModel = _regionMapper.Map<RegionViewModel>(domainRegion.Data);
-            var countries = await _countryService.GetAll().ConfigureAwait(false);
+            var countries = await _countryService.GetLookup().ConfigureAwait(false);
 
-            viewModel.Country = countries.Data
+            viewModel.Country = countries
+                .Data
                 .Where(x => x.Id == domainRegion.Data.CountryId)
                 .FirstOrDefault()
                 .Name;
@@ -170,7 +171,7 @@ namespace wine_app.Controllers
 
         private async Task<IEnumerable<SelectListItem>> GetCountries()
         {
-            var countriesResult = await _countryService.GetAll().ConfigureAwait(false);
+            var countriesResult = await _countryService.GetLookup().ConfigureAwait(false);
             var countries = countriesResult.Data;
 
             var selectList = new List<SelectListItem>()
