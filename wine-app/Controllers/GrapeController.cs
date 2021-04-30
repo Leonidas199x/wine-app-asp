@@ -32,9 +32,14 @@ namespace wine_app.Controllers
 
             foreach(var grape in grapeViewModel)
             {
-                grape.GrapeColourString = grapeColoursResult
+                if(grape.GrapeColourId != null)
+                {
+                    grape.GrapeColourString = grapeColoursResult
                     .Data
-                    .Where(x => x.Id == grape.GrapeColourId).FirstOrDefault().Colour;
+                    .Where(x => x.Id == grape.GrapeColourId.Value)
+                    .FirstOrDefault()
+                    .Colour;
+                }
             }
 
             var viewModel = new Result<IEnumerable<GrapeViewModel>>
@@ -102,10 +107,16 @@ namespace wine_app.Controllers
 
             var domainGrape = _grapeMapper.Map<DataContract.Grape>(model.Data);
 
-            var saveResult = await _grapeService.SaveGrape(domainGrape, SaveType.Update).ConfigureAwait(false);
+            var saveResult = await _grapeService
+                .SaveGrape(domainGrape, SaveType.Update)
+                .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
-                return RedirectToAction("EditGrape", "Grape", new { id = model.Data.Id, IsSuccess = true });
+                return RedirectToAction("EditGrape", "Grape", new 
+                { 
+                    id = model.Data.Id, 
+                    IsSuccess = true 
+                });
             }
 
             var viewModel = new Result<EditableGrapeViewModel>
@@ -157,7 +168,8 @@ namespace wine_app.Controllers
         public async Task<IActionResult> EditColour(int id, bool isSuccess = false)
         {
             var domainGrapeColour = await _grapeService.GetColour(id).ConfigureAwait(false);
-            var outboundGrapeColour = _grapeMapper.Map<EditableGrapeColourViewModel>(domainGrapeColour.Data);
+            var outboundGrapeColour = _grapeMapper.Map<EditableGrapeColourViewModel>
+                (domainGrapeColour.Data);
 
             return View(new Result<EditableGrapeColourViewModel>(outboundGrapeColour, isSuccess));
         }
@@ -177,7 +189,11 @@ namespace wine_app.Controllers
                 .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
-                return RedirectToAction("EditColour", "Grape", new { id = model.Data.Id, IsSuccess = true });
+                return RedirectToAction("EditColour", "Grape", new 
+                { 
+                    id = model.Data.Id, 
+                    IsSuccess = true 
+                });
             }
 
             var viewModel = new Result<EditableGrapeColourViewModel>
@@ -202,7 +218,9 @@ namespace wine_app.Controllers
 
             var domainColour = _grapeMapper.Map<DataContract.GrapeColour>(model.Data);
 
-            var saveResult = await _grapeService.SaveColour(domainColour, SaveType.Insert).ConfigureAwait(false);
+            var saveResult = await _grapeService
+                .SaveColour(domainColour, SaveType.Insert)
+                .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
                 return RedirectToAction("ListColours", "Grape", string.Empty);
