@@ -28,26 +28,15 @@ namespace wine_app.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> List(
-            string searchString, 
-            int currentPage = 1, 
-            int pageSize= 10)
+        public async Task<IActionResult> List(int currentPage = 1, int pageSize= 10)
         {
             var countriesResult = await _countryService.GetAll(currentPage, pageSize)
                 .ConfigureAwait(false);
 
             var outboundCountries = _countryMapper
-                .Map<Models.PagedList<IEnumerable<Models.Country.Country>>>(countriesResult.Data);
+                .Map<Models.PagedList<IEnumerable<Country>>>(countriesResult.Data);
 
-            if(!string.IsNullOrWhiteSpace(searchString))
-            {
-                outboundCountries.Data = outboundCountries.Data
-                    .Where(x => x.Name.Contains(searchString));
-            }
-
-            ViewData["CurrentFilter"] = searchString;
-
-            var viewModel = new Result<Models.PagedList<IEnumerable<Models.Country.Country>>>
+            var viewModel = new Result<Models.PagedList<IEnumerable<Country>>>
                 (countriesResult.IsSuccess, countriesResult.Error, outboundCountries);
 
             return View(viewModel);
@@ -85,7 +74,9 @@ namespace wine_app.Controllers
 
             var domainCountry = _countryMapper.Map<DataContract.Country >(model.Data);
 
-            var saveResult = await _countryService.Save(domainCountry, SaveType.Update).ConfigureAwait(false);
+            var saveResult = await _countryService.
+                Save(domainCountry, SaveType.Update)
+                .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
                 return RedirectToAction("View", "Country", new { id = model.Data.Id , IsSuccess = true });
