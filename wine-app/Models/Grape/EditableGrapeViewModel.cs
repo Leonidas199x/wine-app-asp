@@ -11,8 +11,8 @@ namespace wine_app.Models.Grape
         [Display(Name = "Name"), Required]
         public string Name { get; set; }
 
-        [Display(Name = "Grape Colour"), Required]
-        public int GrapeColourId { get; set; }
+        [Display(Name = "Grape Colour")]
+        public int? GrapeColourId { get; set; }
 
         [Display(Name = "Grape Colour")]
         public IEnumerable<SelectListItem> GrapeColours { get; set; }
