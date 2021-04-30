@@ -8,7 +8,7 @@ namespace wine_app.Models.Grape
 
         public string Name { get; set; }
 
-        public int GrapeColourId { get; set; }
+        public int? GrapeColourId { get; set; }
 
         public string GrapeColourString { get; set; }
 
