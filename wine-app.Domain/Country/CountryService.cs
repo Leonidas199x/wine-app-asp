@@ -12,22 +12,22 @@ namespace wine_app.Domain.Country
             _countryRepository = countryRepository;
         }
 
-        public async Task<Result<PagedList<IEnumerable<Country>>>> GetAll(int page, int pageSize)
+        public async Task<Result<DataContract.PagedList<IEnumerable<DataContract.Country>>>> GetAll(int page, int pageSize)
         {
             return await _countryRepository.GetAll(page, pageSize).ConfigureAwait(false);
         }
 
-        public async Task<Result<IEnumerable<Country>>> GetLookup()
+        public async Task<Result<IEnumerable<DataContract.CountryLookup>>> GetLookup()
         {
             return await _countryRepository.GetLookup().ConfigureAwait(false);
         }
 
-        public async Task<Result<Country>> Get(int id)
+        public async Task<Result<DataContract.Country>> Get(int id)
         {
             return await _countryRepository.Get(id).ConfigureAwait(false);
         }
 
-        public async Task<Result> Save(Country country, SaveType saveType)
+        public async Task<Result> Save(DataContract.Country country, SaveType saveType)
         {
             if(saveType == SaveType.Insert)
             {

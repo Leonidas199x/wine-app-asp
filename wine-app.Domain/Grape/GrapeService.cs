@@ -13,17 +13,17 @@ namespace wine_app.Domain.Grape
         }
 
         #region grape
-        public async Task<Result<IEnumerable<Grape>>> GetGrapes()
+        public async Task<Result<IEnumerable<DataContract.Grape>>> GetGrapes()
         {
             return await _grapeRepository.GetGrapes().ConfigureAwait(false);
         }
 
-        public async Task<Result<Grape>> GetGrape(int id)
+        public async Task<Result<DataContract.Grape>> GetGrape(int id)
         {
             return await _grapeRepository.GetGrape(id).ConfigureAwait(false);
         }
 
-        public async Task<Result> SaveGrape(Grape grape, SaveType saveType)
+        public async Task<Result> SaveGrape(DataContract.Grape grape, SaveType saveType)
         {
             if (saveType == SaveType.Insert)
             {
@@ -40,17 +40,17 @@ namespace wine_app.Domain.Grape
         #endregion
 
         #region colours
-        public async Task<Result<IEnumerable<GrapeColour>>> GetAllColours()
+        public async Task<Result<IEnumerable<DataContract.GrapeColour>>> GetAllColours()
         {
             return await _grapeRepository.GetAllColours().ConfigureAwait(false);
         }
 
-        public async Task<Result<GrapeColour>> GetColour(int id)
+        public async Task<Result<DataContract.GrapeColour>> GetColour(int id)
         {
             return await _grapeRepository.GetColour(id).ConfigureAwait(false);
         }
 
-        public async Task<Result> SaveColour(GrapeColour grapeColour, SaveType saveType)
+        public async Task<Result> SaveColour(DataContract.GrapeColour grapeColour, SaveType saveType)
         {
             if (saveType == SaveType.Insert)
             {

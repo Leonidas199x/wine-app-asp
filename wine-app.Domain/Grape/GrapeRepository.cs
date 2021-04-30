@@ -19,25 +19,25 @@ namespace wine_app.Domain.Grape
         }
 
         #region grape
-        public async Task<Result<IEnumerable<Grape>>> GetGrapes()
+        public async Task<Result<IEnumerable<DataContract.Grape>>> GetGrapes()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}");
-            return await _httpRequestHandler.SendAsync<IEnumerable<Grape>>(request).ConfigureAwait(false);
+            return await _httpRequestHandler.SendAsync<IEnumerable<DataContract.Grape>>(request).ConfigureAwait(false);
         }
 
-        public async Task<Result<Grape>> GetGrape(int id)
+        public async Task<Result<DataContract.Grape>> GetGrape(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/{id}");
-            return await _httpRequestHandler.SendAsync<Grape>(request).ConfigureAwait(false);
+            return await _httpRequestHandler.SendAsync<DataContract.Grape>(request).ConfigureAwait(false);
         }
 
-        public async Task<Result> CreateGrape(Grape grape)
+        public async Task<Result> CreateGrape(DataContract.Grape grape)
         {
             var body = new StringContent(JsonConvert.SerializeObject(grape), Encoding.UTF8, "application/json");
             return await _httpRequestHandler.PostAsync(_controllerUrl, body).ConfigureAwait(false);
         }
 
-        public async Task<Result> UpdateGrape(Grape grape)
+        public async Task<Result> UpdateGrape(DataContract.Grape grape)
         {
             var body = new StringContent(JsonConvert.SerializeObject(grape), Encoding.UTF8, "application/json");
             return await _httpRequestHandler.PutAsync($"{_controllerUrl}/{grape.Id}", body).ConfigureAwait(false);
@@ -51,25 +51,25 @@ namespace wine_app.Domain.Grape
         #endregion
 
         #region grape colour
-        public async Task<Result<IEnumerable<GrapeColour>>> GetAllColours()
+        public async Task<Result<IEnumerable<DataContract.GrapeColour>>> GetAllColours()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/colour");
-            return await _httpRequestHandler.SendAsync<IEnumerable<GrapeColour>>(request).ConfigureAwait(false);
+            return await _httpRequestHandler.SendAsync<IEnumerable<DataContract.GrapeColour>>(request).ConfigureAwait(false);
         }
 
-        public async Task<Result<GrapeColour>> GetColour(int id)
+        public async Task<Result<DataContract.GrapeColour>> GetColour(int id)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/colour/{id}");
-            return await _httpRequestHandler.SendAsync<GrapeColour>(request).ConfigureAwait(false);
+            return await _httpRequestHandler.SendAsync<DataContract.GrapeColour>(request).ConfigureAwait(false);
         }
 
-        public async Task<Result> CreateColour(GrapeColour grapeColour)
+        public async Task<Result> CreateColour(DataContract.GrapeColour grapeColour)
         {
             var body = new StringContent(JsonConvert.SerializeObject(grapeColour), Encoding.UTF8, "application/json");
             return await _httpRequestHandler.PostAsync(_grapeColourUrl, body).ConfigureAwait(false);
         }
 
-        public async Task<Result> UpdateColour(GrapeColour grapeColour)
+        public async Task<Result> UpdateColour(DataContract.GrapeColour grapeColour)
         {
             var body = new StringContent(JsonConvert.SerializeObject(grapeColour), Encoding.UTF8, "application/json");
             return await _httpRequestHandler.PutAsync($"{_grapeColourUrl}/{grapeColour.Id}", body).ConfigureAwait(false);

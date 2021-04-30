@@ -44,7 +44,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var region in Model.Data.OrderBy(x => x.Name).ThenBy(x => x.Country).ThenBy(x => x.Id))
+            @foreach (var region in Model.Data.Data.OrderBy(x => x.Name).ThenBy(x => x.Country).ThenBy(x => x.Id))
             {
                 <tr>
                     <td>
@@ -67,4 +67,32 @@
             }
         </tbody>
     </table>
+    <div>
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" aria-label="Previous" asp-route-currentpage="1">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" asp-route-currentpage="@Model.Data.PreviousPage"><</a>
+            </li>
+            @for (var i = Model.Data.StartPage; i <= Model.Data.EndPage; i++)
+            {
+                <li class="page-item @(i == Model.Data.Page ? "active" : "")">
+                    <a asp-page="/pagination" asp-route-currentpage="@i" class="page-link">@i</a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link" asp-route-currentpage="@Model.Data.NextPage">></a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" aria-label="Next" asp-route-currentpage="@Model.Data.TotalPages">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

@@ -6,27 +6,26 @@ namespace wine_app.Mappers
     {
         public MappingProfile()
         {
-            #region Domain
-            CreateMap(typeof(Models.PagedList<>), typeof(Domain.PagedList<>)).ReverseMap();
-            #endregion
+            CreateMap(typeof(Models.PagedList<>), typeof(DataContract.PagedList<>)).ReverseMap();
 
             #region country
-            CreateMap<Domain.Country.Country, Models.Country.Country>().ReverseMap();
-            CreateMap<Domain.Country.Country, Models.Country.EditableCountryViewModel>().ReverseMap();
-            CreateMap<Models.Country.CountryViewModel, Domain.Country.Country>().ReverseMap();
+            CreateMap<DataContract.Country, Models.Country.Country>().ReverseMap();
+            CreateMap<DataContract.Country, Models.Country.EditableCountryViewModel>().ReverseMap();
+            CreateMap<Models.Country.CountryViewModel, DataContract.Country>().ReverseMap();
             #endregion
 
             #region grape
-            CreateMap<Domain.Grape.Grape, Models.Grape.Grape>().ReverseMap();
-            CreateMap<Domain.Grape.Grape, Models.Grape.GrapeViewModel>().ReverseMap();
-            CreateMap<Models.Grape.EditableGrapeViewModel, Domain.Grape.Grape>().ReverseMap();
-            CreateMap<Domain.Grape.GrapeColour, Models.Grape.GrapeColour>().ReverseMap();
-            CreateMap<Domain.Grape.GrapeColour, Models.Grape.EditableGrapeColourViewModel>().ReverseMap();
+            CreateMap<DataContract.Grape, Models.Grape.Grape>().ReverseMap();
+            CreateMap<DataContract.Grape, Models.Grape.GrapeViewModel>().ReverseMap();
+            CreateMap<Models.Grape.EditableGrapeViewModel, DataContract.Grape>().ReverseMap();
+            CreateMap<DataContract.GrapeColour, Models.Grape.GrapeColour>().ReverseMap();
+            CreateMap<DataContract.GrapeColour, Models.Grape.EditableGrapeColourViewModel>()
+                .ReverseMap();
             #endregion
 
             #region Region
-            CreateMap<Domain.Region.Region, Models.Region.RegionViewModel>().ReverseMap();
-            CreateMap<Domain.Region.Region, Models.Region.EditableRegionViewModel>().ReverseMap();
+            CreateMap<DataContract.Region, Models.Region.RegionViewModel>().ReverseMap();
+            CreateMap<DataContract.Region, Models.Region.EditableRegionViewModel>().ReverseMap();
             #endregion
         }
     }

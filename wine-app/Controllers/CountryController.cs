@@ -83,7 +83,7 @@ namespace wine_app.Controllers
                 return View(new Result<EditableCountryViewModel>(model.Data));
             }
 
-            var domainCountry = _countryMapper.Map<Domain.Country.Country>(model.Data);
+            var domainCountry = _countryMapper.Map<DataContract.Country >(model.Data);
 
             var saveResult = await _countryService.Save(domainCountry, SaveType.Update).ConfigureAwait(false);
             if (saveResult.IsSuccess)
@@ -111,7 +111,7 @@ namespace wine_app.Controllers
                 return View(new Result<EditableCountryViewModel>(model.Data));
             }
 
-            var domainCountry = _countryMapper.Map<Domain.Country.Country>(model.Data);
+            var domainCountry = _countryMapper.Map<DataContract.Country>(model.Data);
 
             var saveResult = await _countryService
                 .Save(domainCountry, SaveType.Insert)

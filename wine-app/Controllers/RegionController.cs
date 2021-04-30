@@ -35,8 +35,18 @@ namespace wine_app.Controllers
         [HttpGet]
         public async Task<IActionResult> List(int currentPage = 1, int pageSize = 10)
         {
-            var domainRegions = await _regionService.GetRegions(currentPage, pageSize).ConfigureAwait(false);
-            var domainViewModel = _regionMapper.Map<Models.PagedList<IEnumerable<RegionViewModel>>>(domainRegions.Data);
+            var domainRegions = await _regionService
+                .GetRegions(currentPage, pageSize)
+                .ConfigureAwait(false);
+
+            if(!domainRegions.IsSuccess)
+            {
+                return View(new Models.PagedList<IEnumerable<RegionViewModel>>());
+            }
+
+            var domainViewModel = _regionMapper
+                .Map<Models.PagedList<IEnumerable<RegionViewModel>>>(domainRegions.Data);
+
             var countries = await _countryService.GetLookup().ConfigureAwait(false);
 
             foreach (var region in domainViewModel.Data)
@@ -92,7 +102,7 @@ namespace wine_app.Controllers
                 return View(new Result<EditableRegionViewModel>(model.Data));
             }
 
-            var domainRegion = _regionMapper.Map<Region>(model.Data);
+            var domainRegion = _regionMapper.Map<DataContract.Region>(model.Data);
 
             var saveResult = await _regionService
                 .Save(domainRegion, SaveType.Update)
@@ -129,7 +139,7 @@ namespace wine_app.Controllers
                 return View(new Result<EditableRegionViewModel>(model.Data));
             }
 
-            var domainCountry = _regionMapper.Map<Region>(model.Data);
+            var domainCountry = _regionMapper.Map<DataContract.Region>(model.Data);
 
             var saveResult = await _regionService
                 .Save(domainCountry, SaveType.Insert)

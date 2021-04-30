@@ -6,21 +6,21 @@ namespace wine_app.Domain.Grape
     public interface IGrapeService
     {
         #region grape
-        Task<Result<IEnumerable<Grape>>> GetGrapes();
+        Task<Result<IEnumerable<DataContract.Grape>>> GetGrapes();
 
-        Task<Result<Grape>> GetGrape(int Id);
+        Task<Result<DataContract.Grape>> GetGrape(int Id);
 
-        Task<Result> SaveGrape(Grape grape, SaveType saveType);
+        Task<Result> SaveGrape(DataContract.Grape grape, SaveType saveType);
 
         Task<Result> DeleteGrape(int id);
         #endregion
 
         #region colours
-        Task<Result<IEnumerable<GrapeColour>>> GetAllColours();
+        Task<Result<IEnumerable<DataContract.GrapeColour>>> GetAllColours();
 
-        Task<Result<GrapeColour>> GetColour(int Id);
+        Task<Result<DataContract.GrapeColour>> GetColour(int Id);
 
-        Task<Result> SaveColour(GrapeColour grapeColour, SaveType saveType);
+        Task<Result> SaveColour(DataContract.GrapeColour grapeColour, SaveType saveType);
 
         Task<Result> DeleteColour(int Id);
         #endregion

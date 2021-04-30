@@ -63,7 +63,7 @@ namespace wine_app.Controllers
                 return View(new Result<EditableGrapeViewModel>(model.Data));
             }
 
-            var domainGrape = _grapeMapper.Map<Domain.Grape.Grape>(model.Data);
+            var domainGrape = _grapeMapper.Map<DataContract.Grape>(model.Data);
 
             var saveResult = await _grapeService
                 .SaveGrape(domainGrape, SaveType.Insert)
@@ -100,7 +100,7 @@ namespace wine_app.Controllers
                 return View(new Result<EditableGrapeViewModel>(model.Data));
             }
 
-            var domainGrape = _grapeMapper.Map<Domain.Grape.Grape>(model.Data);
+            var domainGrape = _grapeMapper.Map<DataContract.Grape>(model.Data);
 
             var saveResult = await _grapeService.SaveGrape(domainGrape, SaveType.Update).ConfigureAwait(false);
             if (saveResult.IsSuccess)
@@ -170,7 +170,7 @@ namespace wine_app.Controllers
                 return View(new Result<EditableGrapeColourViewModel>(model.Data));
             }
 
-            var domainGrapeColour = _grapeMapper.Map<Domain.Grape.GrapeColour>(model.Data);
+            var domainGrapeColour = _grapeMapper.Map<DataContract.GrapeColour>(model.Data);
 
             var saveResult = await _grapeService
                 .SaveColour(domainGrapeColour, SaveType.Update)
@@ -200,7 +200,7 @@ namespace wine_app.Controllers
                 return View(new Result<EditableGrapeColourViewModel>(model.Data));
             }
 
-            var domainColour = _grapeMapper.Map<Domain.Grape.GrapeColour>(model.Data);
+            var domainColour = _grapeMapper.Map<DataContract.GrapeColour>(model.Data);
 
             var saveResult = await _grapeService.SaveColour(domainColour, SaveType.Insert).ConfigureAwait(false);
             if (saveResult.IsSuccess)

@@ -5,13 +5,13 @@ namespace wine_app.Domain.Country
 {
     public interface ICountryService
     {
-        Task<Result<PagedList<IEnumerable<Country>>>> GetAll(int page, int pageSize);
+        Task<Result<DataContract.PagedList<IEnumerable<DataContract.Country>>>> GetAll(int page, int pageSize);
 
-        Task<Result<IEnumerable<Country>>> GetLookup();
+        Task<Result<IEnumerable<DataContract.CountryLookup>>> GetLookup();
 
-        Task<Result<Country>> Get(int id);
+        Task<Result<DataContract.Country>> Get(int id);
 
-        Task<Result> Save(Country country, SaveType saveType);
+        Task<Result> Save(DataContract.Country country, SaveType saveType);
 
         Task<Result> Delete(int id);
     }

@@ -12,17 +12,17 @@ namespace wine_app.Domain.Region
             _regionRepository = regionRepository;
         }
 
-        public async Task<Result<PagedList<IEnumerable<Region>>>> GetRegions(int page, int pageSize)
+        public async Task<Result<DataContract.PagedList<IEnumerable<DataContract.Region>>>> GetRegions(int page, int pageSize)
         {
             return await _regionRepository.GetRegions(page, pageSize).ConfigureAwait(false);
         }
 
-        public async Task<Result<Region>> GetRegion(int id)
+        public async Task<Result<DataContract.Region>> GetRegion(int id)
         {
             return await _regionRepository.GetRegion(id).ConfigureAwait(false);
         }
 
-        public async Task<Result> Save(Region region, SaveType saveType)
+        public async Task<Result> Save(DataContract.Region region, SaveType saveType)
         {
             if (saveType == SaveType.Insert)
             {
