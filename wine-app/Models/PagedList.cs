@@ -1,4 +1,6 @@
-﻿namespace wine_app.Models
+﻿using System;
+
+namespace wine_app.Models
 {
     public class PagedList<T>
     {
@@ -10,47 +12,20 @@
 
         public T Data { get; set; }
 
+        public int PagesLeft = 2;
+
+        public int PagesRight = 2;
+
         public int PreviousPage => Page - 1;
 
         public int NextPage => Page + 1;
 
-        public int StartPage => GetStartPage(Page, TotalPages);
+        public int FromPage => Math.Max(1, Page - PagesLeft);
 
-        public int EndPage => GetEndPage(Page, TotalPages);
+        public int ToPage => Math.Min(TotalPages, Page + PagesRight);
 
-        private int GetStartPage(int page, int totalPages)
-        {
-            if((page - 3) < 1)
-            {
-                return 1;
-            }
+        public int FirstMiddlePage => (int)Math.Ceiling((double)(FromPage - 2) / 2) + 1;
 
-            if(page > totalPages - 7)
-            {
-                return TotalPages - 7;
-            }
-
-            return Page - 3;
-        }
-
-        private int GetEndPage(int page, int totalPages)
-        {
-            if(page <= 4)
-            {
-                return 7;
-            }
-
-            if ((page + 3) > totalPages)
-            {
-                return totalPages;
-            }
-
-            if(page > totalPages - 7)
-            {
-                return totalPages;
-            }
-
-            return Page + 3;
-        }
+        public int LastMiddlePage => (int)Math.Ceiling((double)(TotalPages - ToPage) / 2) + ToPage;
     }
 }
