@@ -56,7 +56,8 @@ namespace wine_app.Controllers
                     .Where(x => x.Id == region.CountryId).FirstOrDefault().Name;
             }
 
-            var viewModel = new Result<Models.PagedList<IEnumerable<RegionViewModel>>>(domainViewModel);
+            var viewModel = new Result<Models.PagedList<IEnumerable<RegionViewModel>>>
+                (domainViewModel);
 
             return View(viewModel);
         }
