@@ -46,7 +46,7 @@
             {
                 <tr>
                     <td>
-                        @country.Name
+                        <a asp-controller="Country" asp-action="View" asp-route-id="@country.Id">@country.Name</a>
                     </td>
                     <td>
                         @country.IsoCode
