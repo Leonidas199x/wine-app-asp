@@ -30,6 +30,7 @@ namespace wine_app.Mappers
 
             #region Drinker
             CreateMap<DataContract.Drinker, Models.Drinker.Drinker>().ReverseMap();
+            CreateMap<DataContract.Drinker, Models.Drinker.EditableDrinkerViewModel>().ReverseMap();
             #endregion
         }
     }
