@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using wine_app.Domain;
 using wine_app.Domain.Country;
+using wine_app.Domain.Drinker;
 using wine_app.Domain.Grape;
 using wine_app.Domain.MapBox;
 using wine_app.Domain.Region;
@@ -39,6 +40,8 @@ namespace wine_app
             new MapBoxRepository(
                 x.GetRequiredService<IHttpRequestHandler>(), 
                 Configuration.GetSection("MapBoxApiKey").Value));
+            services.AddTransient<IDrinkerService, DrinkerService>();
+            services.AddTransient<IDrinkerRepository, DrinkerRepository>();
 
             //Register automapper
             services.AddAutoMapper(typeof(MappingProfile));
