@@ -60,7 +60,12 @@ namespace wine_app.Controllers
                 .ConfigureAwait(false);
             if (saveResult.IsSuccess)
             {
-                return RedirectToAction("List", "Drinker", new { id = model.Data.Id, IsSuccess = true });
+                return RedirectToAction("List", "Drinker", 
+                    new 
+                    { 
+                        id = model.Data.Id, 
+                        IsSuccess = true 
+                    });
             }
 
             var viewModel = new Result<EditableDrinkerViewModel>
