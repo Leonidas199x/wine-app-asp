@@ -1,76 +1,79 @@
-﻿<ul class="pagination">
-    <li class="page-item">
-        @if (Model.Data.Page > 1)
-        {
+﻿@if (Model.Data.TotalPages > 1)
+{
+    <ul class="pagination">
         <li class="page-item">
-            <a class="page-link" asp-route-currentpage="@Model.Data.PreviousPage">Previous</a>
-        </li>
-    }
-    else
-    {
-        <li class="page-item disabled">
-            <a class="page-link" asp-route-currentpage="@Model.Data.PreviousPage">Previous</a>
-        </li>
-    }
-
-        @{
-            var currentPage = Model.Data.Page;
-            var pageCount = Model.Data.TotalPages;
-
-            var toPage = Model.Data.ToPage;
-
-            if (Model.Data.TotalPages - Model.Data.ToPage == 1)
+            @if (Model.Data.Page > 1)
             {
-                toPage = Model.Data.TotalPages;
-            }
-
-            if (Model.Data.FromPage > 1)
-            {
-                <li>
-                    <a class="page-link" asp-route-currentpage="1">1</a>
-                </li>
-                if (Model.Data.FromPage > 2)
-                {
-
-                    <li>
-                        <a class="page-link" asp-route-currentpage="@Model.Data.FirstMiddlePage">...</a>
-                    </li>
-                }
-            }
-
-            for (int i = Model.Data.FromPage; i <= toPage; i++)
-            {
-                <li class="page-item @(i == Model.Data.Page ? "active" : "")">
-                    <a asp-page="/pagination" asp-route-currentpage="@i" class="page-link">@i</a>
-                </li>
-            }
-
-            if (toPage < Model.Data.TotalPages)
-            {
-                <li>
-                    <a class="page-link" asp-route-currentpage="@Model.Data.LastMiddlePage">...</a>
-                </li>
-                if (toPage < Model.Data.TotalPages - 1)
-                {
-                    <li>
-                        <a class="page-link" asp-route-currentpage="@Model.Data.TotalPages">@Model.Data.TotalPages</a>
-                    </li>
-                }
-
-            }
-
-        }
-
-        <li class="page-item">
-            @if (Model.Data.Page < Model.Data.TotalPages)
-            {
-                <a class="page-link" asp-route-currentpage="@Model.Data.NextPage">Next</a>
+            <li class="page-item">
+                <a class="page-link" asp-route-currentpage="@Model.Data.PreviousPage">Previous</a>
+            </li>
             }
             else
             {
-                <a class="page-item disabled">
-                    <span class="page-link">Next</span>
-                </a>
+            <li class="page-item disabled">
+                <a class="page-link" asp-route-currentpage="@Model.Data.PreviousPage">Previous</a>
+            </li>
             }
-        </li>
-</ul>
+
+            @{
+                var currentPage = Model.Data.Page;
+                var pageCount = Model.Data.TotalPages;
+
+                var toPage = Model.Data.ToPage;
+
+                if (Model.Data.TotalPages - Model.Data.ToPage == 1)
+                {
+                    toPage = Model.Data.TotalPages;
+                }
+
+                if (Model.Data.FromPage > 1)
+                {
+                    <li>
+                        <a class="page-link" asp-route-currentpage="1">1</a>
+                    </li>
+                    if (Model.Data.FromPage > 2)
+                    {
+
+                        <li>
+                            <a class="page-link" asp-route-currentpage="@Model.Data.FirstMiddlePage">...</a>
+                        </li>
+                    }
+                }
+
+                for (int i = Model.Data.FromPage; i <= toPage; i++)
+                {
+                    <li class="page-item @(i == Model.Data.Page ? "active" : "")">
+                        <a asp-page="/pagination" asp-route-currentpage="@i" class="page-link">@i</a>
+                    </li>
+                }
+
+                if (toPage < Model.Data.TotalPages)
+                {
+                    <li>
+                        <a class="page-link" asp-route-currentpage="@Model.Data.LastMiddlePage">...</a>
+                    </li>
+                    if (toPage < Model.Data.TotalPages - 1)
+                    {
+                        <li>
+                            <a class="page-link" asp-route-currentpage="@Model.Data.TotalPages">@Model.Data.TotalPages</a>
+                        </li>
+                    }
+
+                }
+
+            }
+
+            <li class="page-item">
+                @if (Model.Data.Page < Model.Data.TotalPages)
+                {
+                    <a class="page-link" asp-route-currentpage="@Model.Data.NextPage">Next</a>
+                }
+                else
+                {
+                    <a class="page-item disabled">
+                        <span class="page-link">Next</span>
+                    </a>
+                }
+            </li>
+    </ul>
+}
