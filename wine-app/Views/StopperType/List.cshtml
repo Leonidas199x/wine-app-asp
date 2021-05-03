@@ -1,12 +1,12 @@
-﻿@model wine_app.Domain.Result<wine_app.Models.PagedList<IEnumerable<wine_app.Models.Drinker.Drinker>>>
+﻿@model wine_app.Domain.Result<wine_app.Models.PagedList<IEnumerable<wine_app.Models.StopperType.StopperType>>>
 @{
-    ViewData["Title"] = "Drinkers";
+    ViewData["Title"] = "Stopper Types";
     var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
-    var drinkers = Model.Data?.Data;
+    var stopperTypes = Model.Data?.Data;
 }
 <script src="~/js/delete.js"></script>
 
-<h1>Drinkers</h1>
+<h1>Stopper Types</h1>
 @if (hasErrors)
 {
     <div class="form-group">
@@ -23,10 +23,10 @@
 </div>
 <hr />
 <div class="row"></div>
-@if(drinkers != null)
+@if(stopperTypes != null)
 { 
     <div>
-        <table class="table" id="drinkersTable">
+        <table class="table" id="stopperTypesTable">
             <thead>
                 <tr id="header">
                     <th>
@@ -38,18 +38,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var drinker in drinkers.OrderBy(x => x.Name).ThenBy(x => x.Id))
+                @foreach (var stopperType in stopperTypes.OrderBy(x => x.Name).ThenBy(x => x.Id))
                 {
                     <tr>
                         <td>
-                            <a asp-controller="Drinker" asp-action="Edit" asp-route-id="@drinker.Id">@drinker.Name</a>
+                            <a asp-controller="StopperType" asp-action="Edit" asp-route-id="@stopperType.Id">@stopperType.Name</a>
                         </td>
                         <td>
-                            <a class="btn btn-primary" asp-controller="Drinker" asp-action="Edit" asp-route-id="@drinker.Id">Edit</a>
+                            <a class="btn btn-primary" asp-controller="StopperType" asp-action="Edit" asp-route-id="@stopperType.Id">Edit</a>
                             <button 
                                     class="btn btn-danger" 
                                     id="deleteButton" 
-                                    onclick="deleteEntity('Drinker', @drinker.Id, @Html.Raw("'"+@drinker.Name+"'"), 'Drinker', 'Drinkers')">
+                                    onclick="deleteEntity('StopperType', @stopperType.Id, @Html.Raw("'"+stopperType.Name+"'"), 'Stopper Type', 'Stopper Types')">
                             Delete
                             </button>
                         </td>

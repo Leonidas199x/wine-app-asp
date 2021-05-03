@@ -32,6 +32,11 @@ namespace wine_app.Mappers
             CreateMap<DataContract.Drinker, Models.Drinker.Drinker>().ReverseMap();
             CreateMap<DataContract.Drinker, Models.Drinker.EditableDrinkerViewModel>().ReverseMap();
             #endregion
+
+            #region StopperType
+            CreateMap<DataContract.StopperType, Models.StopperType.StopperType>().ReverseMap();
+            CreateMap<DataContract.StopperType, Models.StopperType.EditableStopperTypeViewModel>().ReverseMap();
+            #endregion
         }
     }
 }

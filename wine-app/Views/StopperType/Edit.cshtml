@@ -1,0 +1,14 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.StopperType.EditableStopperTypeViewModel>
+@{
+    ViewData["Title"] = "Edit Stopper Type";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Edit Stopper Type</h4>
+        <hr />
+        <partial name="_stopperType" />
+    </div>
+}
