@@ -1,0 +1,14 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.Drinker.EditableDrinkerViewModel>
+@{
+    ViewData["Title"] = "Add Drinker";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add Drinker</h4>
+        <hr />
+        <partial name="_drinker" />
+    </div>
+}
