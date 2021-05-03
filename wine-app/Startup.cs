@@ -10,8 +10,8 @@ using wine_app.Domain.Drinker;
 using wine_app.Domain.Grape;
 using wine_app.Domain.MapBox;
 using wine_app.Domain.Region;
+using wine_app.Domain.StopperType;
 using wine_app.Mappers;
-using wine_app.Models;
 
 namespace wine_app
 {
@@ -42,6 +42,8 @@ namespace wine_app
                 Configuration.GetSection("MapBoxApiKey").Value));
             services.AddTransient<IDrinkerService, DrinkerService>();
             services.AddTransient<IDrinkerRepository, DrinkerRepository>();
+            services.AddTransient<IStopperTypeRepository, StopperTypeRepository>();
+            services.AddTransient<IStopperTypeService, StopperTypeService>();
 
             //Register automapper
             services.AddAutoMapper(typeof(MappingProfile));
