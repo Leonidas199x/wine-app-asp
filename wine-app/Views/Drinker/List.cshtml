@@ -4,7 +4,7 @@
     var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
     var drinkers = Model.Data?.Data;
 }
-<script src="~/js/drinker.js"></script>
+<script src="~/js/delete.js"></script>
 
 <h1>Drinkers</h1>
 @if (hasErrors)
@@ -46,7 +46,12 @@
                         </td>
                         <td>
                             <a class="btn btn-primary" asp-controller="Drinker" asp-action="Edit" asp-route-id="@drinker.Id">Edit</a>
-                            <button class="btn btn-danger" id="deleteButton" onclick="deleteDrinker(@drinker.Id, @Html.Raw("'"+@drinker.Name+"'"))">Delete</button>
+                            <button 
+                                    class="btn btn-danger" 
+                                    id="deleteButton" 
+                                    onclick="deleteEntity('Drinker', @drinker.Id, @Html.Raw("'"+@drinker.Name+"'"), 'Drinker', 'Drinkers')">
+                            Delete
+                            </button>
                         </td>
                     </tr>
                 }

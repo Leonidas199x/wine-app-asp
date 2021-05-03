@@ -3,7 +3,7 @@
     ViewData["Title"] = "Regions";
     var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
 }
-<script src="~/js/grape.js"></script>
+<script src="~/js/delete.js"></script>
 
 <h1>Regions</h1>
 @if (hasErrors)
@@ -61,7 +61,12 @@
                     </td>
                     <td>
                         <a class="btn btn-primary" asp-controller="Region" asp-action="View" asp-route-id="@region.Id">View</a>
-                        <button class="btn btn-danger" id="deleteButton" onclick="deleteRegion(@region.Id, @Html.Raw("'"+region.Name+"'"))">Delete</button>
+                        <button 
+                                class="btn btn-danger" 
+                                id="deleteButton" 
+                                onclick="deleteEntity('Region', @region.Id, @Html.Raw("'"+region.Name+"'"), 'Region', 'Regions')">
+                        Delete
+                        </button>
                     </td>
                 </tr>
             }
