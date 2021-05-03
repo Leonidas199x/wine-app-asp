@@ -1,0 +1,59 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.PagedList<IEnumerable<wine_app.Models.Drinker.Drinker>>>
+@{
+    ViewData["Title"] = "Drinkers";
+    var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
+    var drinkers = Model.Data?.Data;
+}
+<script src="~/js/drinker.js"></script>
+
+<h1>Drinkers</h1>
+@if (hasErrors)
+{
+    <div class="form-group">
+        <div class="alert alert-danger">
+            <strong>@Model.Error</strong>
+        </div>
+    </div>
+}
+<div>
+    @if (!hasErrors)
+    {
+        <a class="btn btn-primary" asp-controller="Drinker" asp-action="Insert">Add New Drinker</a>
+    }
+</div>
+<hr />
+<div class="row"></div>
+@if(drinkers != null)
+{ 
+    <div>
+        <table class="table" id="drinkersTable">
+            <thead>
+                <tr id="header">
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var drinker in drinkers.OrderBy(x => x.Name).ThenBy(x => x.Id))
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Drinker" asp-action="Edit" asp-route-id="@drinker.Id">@drinker.Name</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-controller="Drinker" asp-action="Edit" asp-route-id="@drinker.Id">Edit</a>
+                            <button class="btn btn-danger" id="deleteButton" onclick="deleteDrinker(@drinker.Id, @Html.Raw("'"+@drinker.Name+"'"))">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            <partial name="_pagination" />
+        </div>
+    </div>
+}
