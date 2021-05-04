@@ -27,11 +27,11 @@ namespace wine_app.Controllers
                 .GetStopperTypes(currentPage, pageSize)
                 .ConfigureAwait(false);
 
-            var outboundDrinkers = _mapper.Map
+            var outboundWineType = _mapper.Map
                 <Models.PagedList<IEnumerable<StopperType>>>(stopperTypeResult.Data);
 
             var viewModel = new Result<Models.PagedList<IEnumerable<StopperType>>>
-                (stopperTypeResult.IsSuccess, stopperTypeResult.Error, outboundDrinkers);
+                (stopperTypeResult.IsSuccess, stopperTypeResult.Error, outboundWineType);
 
             return View(viewModel);
         }
