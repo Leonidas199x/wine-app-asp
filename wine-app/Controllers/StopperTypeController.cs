@@ -23,15 +23,15 @@ namespace wine_app.Controllers
         [HttpGet]
         public async Task<IActionResult> List(int currentPage = 1, int pageSize = 10)
         {
-            var drinkersResult = await _stopperTypeService
+            var stopperTypeResult = await _stopperTypeService
                 .GetStopperTypes(currentPage, pageSize)
                 .ConfigureAwait(false);
 
             var outboundDrinkers = _mapper.Map
-                <Models.PagedList<IEnumerable<StopperType>>>(drinkersResult.Data);
+                <Models.PagedList<IEnumerable<StopperType>>>(stopperTypeResult.Data);
 
             var viewModel = new Result<Models.PagedList<IEnumerable<StopperType>>>
-                (drinkersResult.IsSuccess, drinkersResult.Error, outboundDrinkers);
+                (stopperTypeResult.IsSuccess, stopperTypeResult.Error, outboundDrinkers);
 
             return View(viewModel);
         }
