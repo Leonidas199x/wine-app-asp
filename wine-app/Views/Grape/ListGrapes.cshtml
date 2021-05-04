@@ -23,52 +23,55 @@
 </div>
 <hr />
 <div class="row"></div>
-<div>
-    <table class="table" id="grapeColourTable">
-        <thead>
-            <tr id="header">
-                <th>
-                    Name
-                </th>
-                <th>
-                    Colour
-                </th>
-                <th>
-                    Note
-                </th>
-                <th>
-                    Date Created
-                </th>
-                <th>
-                    Actions
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var grape in grapes.OrderBy(x => x.Name).ThenBy(x => x.Id))
-            {
-                <tr>
-                    <td>
-                        @grape.Name
-                    </td>
-                    <td>
-                        @grape.GrapeColourString
-                    </td>
-                    <td>
-                        @grape.Note
-                    </td>
-                    <td>
-                        @grape.DateCreated
-                    </td>
-                    <td>
-                        <a class="btn btn-primary" asp-controller="Grape" asp-action="EditGrape" asp-route-id="@grape.Id">Edit</a>
-                        <button class="btn btn-danger" id="deleteButton" onclick="deleteGrape(@grape.Id, @Html.Raw("'"+grape.Name+"'"))">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+@if (grapes != null)
+{
     <div>
-        <partial name="_pagination" />
+        <table class="table" id="grapeColourTable">
+            <thead>
+                <tr id="header">
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Colour
+                    </th>
+                    <th>
+                        Note
+                    </th>
+                    <th>
+                        Date Created
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var grape in grapes.OrderBy(x => x.Name).ThenBy(x => x.Id))
+                {
+                    <tr>
+                        <td>
+                            @grape.Name
+                        </td>
+                        <td>
+                            @grape.GrapeColourString
+                        </td>
+                        <td>
+                            @grape.Note
+                        </td>
+                        <td>
+                            @grape.DateCreated
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-controller="Grape" asp-action="EditGrape" asp-route-id="@grape.Id">Edit</a>
+                            <button class="btn btn-danger" id="deleteButton" onclick="deleteGrape(@grape.Id, @Html.Raw("'" + grape.Name + "'"))">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            <partial name="_pagination" />
+        </div>
     </div>
-</div>
+}
