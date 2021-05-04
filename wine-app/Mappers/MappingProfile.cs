@@ -37,6 +37,11 @@ namespace wine_app.Mappers
             CreateMap<DataContract.StopperType, Models.StopperType.StopperType>().ReverseMap();
             CreateMap<DataContract.StopperType, Models.StopperType.EditableStopperTypeViewModel>().ReverseMap();
             #endregion
+
+            #region WineType
+            CreateMap<DataContract.WineType, Models.WineType.WineType>().ReverseMap();
+            CreateMap<DataContract.WineType, Models.WineType.EditableWineTypeViewModel>().ReverseMap();
+            #endregion
         }
     }
 }

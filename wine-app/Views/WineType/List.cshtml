@@ -1,0 +1,64 @@
+﻿@model wine_app.Domain.Result<wine_app.Models.PagedList<IEnumerable<wine_app.Models.WineType.WineType>>>
+@{
+    ViewData["Title"] = "Wine Types";
+    var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
+    var wineTypes = Model.Data?.Data;
+}
+<script src="~/js/delete.js"></script>
+
+<h1>Wine Types</h1>
+@if (hasErrors)
+{
+    <div class="form-group">
+        <div class="alert alert-danger">
+            <strong>@Model.Error</strong>
+        </div>
+    </div>
+}
+<div>
+    @if (!hasErrors)
+    {
+        <a class="btn btn-primary" asp-controller="WineType" asp-action="Insert">Add New Wine Type</a>
+    }
+</div>
+<hr />
+<div class="row"></div>
+@if(wineTypes != null)
+{ 
+    <div>
+        <table class="table" id="wineTypesTable">
+            <thead>
+                <tr id="header">
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var wineType in wineTypes.OrderBy(x => x.Name).ThenBy(x => x.Id))
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="WineType" asp-action="Edit" asp-route-id="@wineType.Id">@wineType.Name</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-controller="WineType" asp-action="Edit" asp-route-id="@wineType.Id">Edit</a>
+                            <button 
+                                    class="btn btn-danger" 
+                                    id="deleteButton" 
+                                    onclick="deleteEntity('WineType', @wineType.Id, @Html.Raw("'"+wineType.Name+"'"), 'Wine Type', 'Wine Types')">
+                            Delete
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            <partial name="_pagination" />
+        </div>
+    </div>
+}
