@@ -13,7 +13,7 @@ namespace wine_app.Domain.Grape
         }
 
         #region grape
-        public async Task<Result<IEnumerable<DataContract.Grape>>> GetGrapes(int page, int pageSize)
+        public async Task<Result<DataContract.PagedList<IEnumerable<DataContract.Grape>>>> GetGrapes(int page, int pageSize)
         {
             return await _grapeRepository.GetGrapes(page, pageSize).ConfigureAwait(false);
         }
@@ -40,7 +40,7 @@ namespace wine_app.Domain.Grape
         #endregion
 
         #region colours
-        public async Task<Result<IEnumerable<DataContract.GrapeColour>>> GetAllColours(int page, int pageSize)
+        public async Task<Result<DataContract.PagedList<IEnumerable<DataContract.GrapeColour>>>> GetAllColours(int page, int pageSize)
         {
             return await _grapeRepository.GetAllColours(page, pageSize).ConfigureAwait(false);
         }

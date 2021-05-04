@@ -6,7 +6,7 @@ namespace wine_app.Domain.Grape
     public interface IGrapeService
     {
         #region grape
-        Task<Result<IEnumerable<DataContract.Grape>>> GetGrapes(int page, int pageSize);
+        Task<Result<DataContract.PagedList<IEnumerable<DataContract.Grape>>>> GetGrapes(int page, int pageSize);
 
         Task<Result<DataContract.Grape>> GetGrape(int Id);
 
@@ -16,7 +16,7 @@ namespace wine_app.Domain.Grape
         #endregion
 
         #region colours
-        Task<Result<IEnumerable<DataContract.GrapeColour>>> GetAllColours(int page, int pageSize);
+        Task<Result<DataContract.PagedList<IEnumerable<DataContract.GrapeColour>>>> GetAllColours(int page, int pageSize);
 
         Task<Result<DataContract.GrapeColour>> GetColour(int Id);
 
