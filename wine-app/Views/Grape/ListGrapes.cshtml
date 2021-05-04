@@ -1,7 +1,8 @@
-﻿@model wine_app.Domain.Result<IEnumerable<wine_app.Models.Grape.GrapeViewModel>>
+﻿@model wine_app.Domain.Result<PagedList<IEnumerable<wine_app.Models.Grape.GrapeViewModel>>>
 @{
     ViewData["Title"] = "Grapes";
     var hasErrors = !string.IsNullOrWhiteSpace(@Model.Error);
+    var grapes = Model.Data?.Data;
 }
 <script src="~/js/grape.js"></script>
 
@@ -44,7 +45,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var grape in Model.Data.OrderBy(x => x.Name).ThenBy(x => x.Id))
+            @foreach (var grape in grapes.OrderBy(x => x.Name).ThenBy(x => x.Id))
             {
                 <tr>
                     <td>
@@ -67,4 +68,7 @@
             }
         </tbody>
     </table>
+    <div>
+        <partial name="_pagination" />
+    </div>
 </div>

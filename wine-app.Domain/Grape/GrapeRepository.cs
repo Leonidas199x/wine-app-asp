@@ -19,9 +19,9 @@ namespace wine_app.Domain.Grape
         }
 
         #region grape
-        public async Task<Result<IEnumerable<DataContract.Grape>>> GetGrapes()
+        public async Task<Result<IEnumerable<DataContract.Grape>>> GetGrapes(int page, int pageSize)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}?page={page}&pageSize={pageSize}");
             return await _httpRequestHandler.SendAsync<IEnumerable<DataContract.Grape>>(request).ConfigureAwait(false);
         }
 
@@ -51,9 +51,9 @@ namespace wine_app.Domain.Grape
         #endregion
 
         #region grape colour
-        public async Task<Result<IEnumerable<DataContract.GrapeColour>>> GetAllColours()
+        public async Task<Result<IEnumerable<DataContract.GrapeColour>>> GetAllColours(int page, int pageSize)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/colour");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_controllerUrl}/colour?page={page}&pageSize={pageSize}");
             return await _httpRequestHandler.SendAsync<IEnumerable<DataContract.GrapeColour>>(request).ConfigureAwait(false);
         }
 

@@ -24,9 +24,9 @@ namespace wine_app.Controllers
 
         #region grape
         [HttpGet]
-        public async Task<IActionResult> ListGrapes()
+        public async Task<IActionResult> ListGrapes(int currentPage = 1, int pageSize = 10)
         {
-            var domainGrapes = await _grapeService.GetGrapes().ConfigureAwait(false);
+            var domainGrapes = await _grapeService.GetGrapes(currentPage, pageSize).ConfigureAwait(false);
             var grapeViewModel = _grapeMapper.Map<IEnumerable<GrapeViewModel>>(domainGrapes.Data);
             var grapeColoursResult = await _grapeService.GetAllColours().ConfigureAwait(false);
 
