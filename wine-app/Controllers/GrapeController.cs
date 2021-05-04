@@ -24,11 +24,11 @@ namespace wine_app.Controllers
 
         #region grape
         [HttpGet]
-        public async Task<IActionResult> ListGrapes(int currentPage = 1, int pageSize = 10)
+        public async Task<IActionResult> ListGrapes([FromQuery] int currentPage = 1, [FromQuery] int pageSize = 10)
         {
             var domainGrapes = await _grapeService.GetGrapes(currentPage, pageSize).ConfigureAwait(false);
             var grapeViewModel = _grapeMapper.Map<IEnumerable<GrapeViewModel>>(domainGrapes.Data);
-            var grapeColoursResult = await _grapeService.GetAllColours().ConfigureAwait(false);
+            var grapeColoursResult = await _grapeService.GetAllColours(currentPage, pageSize).ConfigureAwait(false);
 
             foreach(var grape in grapeViewModel)
             {
@@ -152,13 +152,17 @@ namespace wine_app.Controllers
 
         #region colours
         [HttpGet]
-        public async Task<IActionResult> ListColours()
+        public async Task<IActionResult> ListColours(
+            [FromQuery] int currentPage = 1, 
+            [FromQuery] int pageSize = 10)
         {
-            var grapeColoursResult = await _grapeService.GetAllColours().ConfigureAwait(false);
-            var outboundGrapeColours = _grapeMapper.Map<IEnumerable<Models.Grape.GrapeColour>>
+            var grapeColoursResult = await _grapeService
+                .GetAllColours(currentPage, pageSize)
+                .ConfigureAwait(false);
+            var outboundGrapeColours = _grapeMapper.Map<IEnumerable<GrapeColour>>
                 (grapeColoursResult.Data);
 
-            var viewModel = new Result<IEnumerable<Models.Grape.GrapeColour>>
+            var viewModel = new Result<IEnumerable<GrapeColour>>
                 (grapeColoursResult.IsSuccess, grapeColoursResult.Error, outboundGrapeColours);
 
             return View(viewModel);
